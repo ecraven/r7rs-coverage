@@ -38,13 +38,8 @@ mit_scheme_exec() {
 }
 
 guile_exec() {
-    guile < $1 > /tmp/guile.log 2>&1
-    if grep 'ERROR\|<unnamed port>:' /tmp/guile.log
-    then
-        status=1
-    else
-        status=0
-    fi
+    guile $1 > /tmp/guile.log 2>&1
+    status=$?
 }
 
 chibi_exec() {
@@ -91,6 +86,7 @@ do
                 } | grep ERROR | tee -a errors.csv
             fi
         done
+        rm $temp_dir/*.scm
     done
 done
 rm -Rf $temp_dir
