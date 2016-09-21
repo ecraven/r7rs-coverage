@@ -77,7 +77,7 @@ mosh_exec() {
 
 larceny_exec() {
     larceny -r7rs -program $1 < /dev/null > /tmp/larceny.log 2>&1
-    if grep 'Error: ' /tmp/csi.log
+    if grep 'Error: ' /tmp/larceny.log
     then
         status=1
     else
