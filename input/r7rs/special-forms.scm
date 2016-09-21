@@ -2,7 +2,7 @@
 ;; TEST
 (assert (= 5 ((lambda (x) x) 5)))
 ;; TEST
-(assert (= 5 ((lambda (x . y) y) 3 5)))
+(assert (equal? '(5) ((lambda (x . y) y) 3 5)))
 ;; TEST
 (assert (equal? '(3 5) ((lambda x x) 3 5)))
 ;; TEST
