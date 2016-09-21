@@ -25,11 +25,50 @@ case "$1" in
              SCHEME_NAME=mosh
              SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
              ;;
+    picrin) SCHEME_EXE=picrin_exec
+          SCHEME_NAME=picrin
+          SCHEME_VERSION="unknown"
+          ;;
+    gambitc) SCHEME_EXE=gambitc_exec
+          SCHEME_NAME=gambitc
+          SCHEME_VERSION="unknown"
+          ;;
+    gauche) SCHEME_EXE=gauche_exec
+          SCHEME_NAME=gauche
+          SCHEME_VERSION=$(gosh -V | cut -f 5 -d\  )
+          ;;
+    racket) SCHEME_EXE=racket_exec
+          SCHEME_NAME=racket
+          SCHEME_VERSION=$(racket --version | cut -f 4 -d\ | sed 's/\.$//')
+          ;;
+
     *) echo "Unknown Scheme"
        exit -1
        ;;
 esac
 
+
+racket_exec() {
+    racket $1
+    status=$?
+}
+
+gauche_exec() {
+    gosh -r7 -b $1
+    status=$?
+}
+
+gambitc_exec() {
+    exe=$(mktemp)
+    ( gambitc -o $exe -exe $1 && $exe ) >> gambitc.log 2>&1
+    status=$?
+    rm $exe
+}
+
+picrin_exec() {
+    picrin $1
+    status=$?
+}
 
 mosh_exec() {
     mosh-scheme $1
