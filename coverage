@@ -1,0 +1,99 @@
+#!/bin/bash
+
+case "$1" in
+    mit) SCHEME_EXE=mit_scheme_exec
+         SCHEME_NAME=mit
+         SCHEME_VERSION=$(mit-scheme --version | grep Release | cut -f 4 -d\  )
+         ;;
+    guile) SCHEME_EXE=guile_exec
+           SCHEME_NAME=guile
+           SCHEME_VERSION=$(guile --version | head -n 1 | cut -f 4 -d\   )
+           ;;
+    chibi) SCHEME_EXE=chibi_exec
+           SCHEME_NAME=chibi
+           SCHEME_VERSION=$(chibi-scheme  -V | cut -f 2 -d\  )
+           ;;
+    chicken) SCHEME_EXE=csi_exec
+             SCHEME_NAME=chicken
+             SCHEME_VERSION=$(csi -version | grep Version | cut -f 2 -d\   )
+             ;;
+    *) echo "Unknown Scheme"
+       exit -1
+       ;;
+esac
+
+csi_exec() {
+    csi < $1 > /tmp/csi.log 2>&1
+    if grep 'Error: ' /tmp/csi.log
+    then
+        status=1
+    else
+        status=0
+    fi
+}
+
+mit_scheme_exec() {
+    mit-scheme < $1
+    status=$?
+}
+
+guile_exec() {
+    guile < $1 > /tmp/guile.log 2>&1
+    if grep 'ERROR\|<unnamed port>:' /tmp/guile.log
+    then
+        status=1
+    else
+        status=0
+    fi
+}
+
+chibi_exec() {
+    chibi-scheme < $1 > /tmp/chibi.log 2>&1
+    if grep 'ERROR' /tmp/chibi.log
+    then
+        status=1
+    else
+        status=0
+    fi
+}
+temp_dir=$(mktemp -d)
+for dir in input/*
+do
+    #echo running group $dir
+    for i in $dir/*.scm
+    do
+        #echo running file $i
+        csplit --suppress-matched --quiet -f ${temp_dir}/cov -b '%02d.scm' $i '/;; TEST/' '{*}'
+        for file in ${temp_dir}/*
+        do
+            {
+                tmpfile=$(mktemp)
+                d=$(echo $dir | sed 's|input/||')
+                if [ -r preludes/$d/$SCHEME_NAME.scm ]
+                then
+                    cat preludes/$d/$SCHEME_NAME.scm > $tmpfile
+                fi
+                if [ -r preludes/$SCHEME_NAME.scm ]
+                then
+                    cat preludes/$SCHEME_NAME.scm >> $tmpfile
+                fi
+                cat $file >> $tmpfile
+                $SCHEME_EXE $tmpfile
+                rm $tmpfile
+            } >> $SCHEME_NAME.log 2>&1
+            if [ $status == 0 ]; then
+                # don't do anything
+                true
+            else
+                {
+                echo -n "$SCHEME_NAME,$SCHEME_VERSION,ERROR,"
+                cat $file
+                } | grep ERROR | tee -a errors.csv
+            fi
+        done
+    done
+done
+rm -Rf $temp_dir
+# Local Variables:
+# mode: sh
+# End:
