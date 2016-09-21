@@ -17,10 +17,34 @@ case "$1" in
              SCHEME_NAME=chicken
              SCHEME_VERSION=$(csi -version | grep Version | cut -f 2 -d\   )
              ;;
+    larceny) SCHEME_EXE=larceny_exec
+             SCHEME_NAME=larceny
+             SCHEME_VERSION=$(larceny --version | cut -f 2 -d\  )
+             ;;
+    mosh) SCHEME_EXE=mosh_exec
+             SCHEME_NAME=mosh
+             SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
+             ;;
     *) echo "Unknown Scheme"
        exit -1
        ;;
 esac
+
+
+mosh_exec() {
+    mosh-scheme $1
+    status=$?
+}
+
+larceny_exec() {
+    larceny -r7rs -program $1 < /dev/null > /tmp/larceny.log 2>&1
+    if grep 'Error: ' /tmp/csi.log
+    then
+        status=1
+    else
+        status=0
+    fi
+}
 
 csi_exec() {
     csi < $1 > /tmp/csi.log 2>&1
@@ -79,11 +103,14 @@ do
             } >> $SCHEME_NAME.log 2>&1
             if [ $status == 0 ]; then
                 # don't do anything
-                true
+                {
+                    echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,OK,"
+                    cat $file
+                } | grep ',OK,' | tee -a errors.csv
             else
                 {
-                echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,"
-                cat $file
+                    echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,"
+                    cat $file
                 } | grep ERROR | tee -a errors.csv
             fi
         done
