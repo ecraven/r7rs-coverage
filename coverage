@@ -64,6 +64,7 @@ do
             {
                 tmpfile=$(mktemp)
                 d=$(echo $dir | sed 's|input/||')
+                TEST_GROUP=$(echo $i | sed -e 's|input/||' -e 's/.scm//')
                 if [ -r preludes/$d/$SCHEME_NAME.scm ]
                 then
                     cat preludes/$d/$SCHEME_NAME.scm > $tmpfile
@@ -81,7 +82,7 @@ do
                 true
             else
                 {
-                echo -n "$SCHEME_NAME,$SCHEME_VERSION,ERROR,"
+                echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,"
                 cat $file
                 } | grep ERROR | tee -a errors.csv
             fi

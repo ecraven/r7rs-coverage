@@ -29,6 +29,20 @@
 ;; TEST
 (assert (>= 2 2 1 1))
 ;; TEST
+(assert (zero? 0))
+;; TEST
+(assert (positive? 1))
+;; TEST
+(assert (negative? -1))
+;; TEST
+(assert (odd? 3))
+;; TEST
+(assert (even? 2))
+;; TEST
+(assert (= 5 (max 1 2 3 4 5)))
+;; TEST
+(assert (= 1 (min 1 2 3 4 5)))
+;; TEST
 (assert (= 0 (+)))
 ;; TEST
 (assert (= 5 (+ 5)))

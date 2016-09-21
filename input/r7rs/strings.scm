@@ -31,9 +31,9 @@
 ;; TEST
 (assert (string-ci<=? "a" "A" "b" "B"))
 ;; TEST
-(assert (string>=? "a" "a" "b" "b"))
+(assert (string>=? "b" "b" "a" "a"))
 ;; TEST
-(assert (string-ci>=? "a" "A" "b" "B"))
+(assert (string-ci>=? "b" "B" "a" "A"))
 ;; TEST
 (assert (string=? "FOO" (string-upcase "foo")))
 ;; TEST
