@@ -112,3 +112,35 @@
 (assert (and (> (sqrt 17) 4.123) (< (sqrt 17) 4.124)))
 ;; TEST
 (assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))
+;; TEST
+(assert (= 8 (expt 2 3)))
+;; TEST
+(assert (= 1 (expt 0 0)))
+;; TEST
+(assert (= 0 (expt 0 1)))
+;; TEST
+(assert (= 1+2i (make-rectangular 1 2)))
+;; TEST
+(assert (= 1 (real-part (make-rectangular 1 2))))
+;; TEST
+(assert (= 2 (imag-part (make-rectangular 1 2))))
+;; TEST
+(assert (= 3 (magnitude (make-polar 3 1))))
+;; TEST
+(assert (< (abs (- (angle (make-polar 3 1)) 1)) 0.000001))
+;; TEST
+(assert (inexact? (inexact 3)))
+;; TEST
+(assert (exact? (exact 3.0)))
+;; TEST
+(assert (string=? "123" (number->string 123)))
+(assert (string=? "1111011" (number->string 123 2)))
+(assert (string=? "173" (number->string 123 8)))
+(assert (string=? "7b" (number->string 123 16)))
+(assert (string=? "123" (number->string 123 10)))
+;; TEST
+(assert (= 123 (string->number "123")))
+(assert (= 123 (string->number "7b" 16)))
+(assert (= 123 (string->number "173" 8)))
+(assert (= 123 (string->number "1111011" 2)))
+(assert (eq? #f (string->number "abcd")))
