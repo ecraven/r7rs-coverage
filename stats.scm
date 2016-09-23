@@ -66,7 +66,7 @@
       (set! *schemes* (make-hash-table))
       (set! *groups* (make-hash-table))
       (parse-data)
-      (format #t "<table><thead><tr><th>Scheme</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
+      (format #t "<table><thead><tr><th>Scheme</th><th>Percentage</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
       (hash-table-walk *schemes*
                        (lambda (k v)
                          (let ((ok (hash-table/get v '|OK| 0))

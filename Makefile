@@ -1,7 +1,7 @@
 all: mit chicken guile chibi larceny mosh picrin gambitc gauche racket
 
 clean:
-	rm -f *.log
+	rm -f *.log errors.csv
 
 mit:
 	./coverage mit

@@ -1,47 +1,533 @@
 <table><thead><tr><th>Scheme</th><th>Ok</th><th>Error</th></tr></thead><tbody>
-<tr><td>mosh-0.2.7</td><td>75.2%</td><td>188</td><td>62</td></tr>
-<tr><td>chibi-0.7.3</td><td>100.%</td><td>250</td><td>0</td></tr>
-<tr><td>larceny-v0.98</td><td>79.2%</td><td>198</td><td>52</td></tr>
-<tr><td>picrin-unknown</td><td>78.4%</td><td>196</td><td>54</td></tr>
-<tr><td>gauche-0.9.4</td><td>80.4%</td><td>201</td><td>49</td></tr>
-<tr><td>guile-2.0.12</td><td>85.2%</td><td>213</td><td>37</td></tr>
-<tr><td>chicken-4.11.0</td><td>89.6%</td><td>224</td><td>26</td></tr>
-<tr><td>gambitc-unknown</td><td>70.8%</td><td>177</td><td>73</td></tr>
-<tr><td>racket-v6.6</td><td>79.6%</td><td>199</td><td>51</td></tr>
-<tr><td>mit-9.2.1</td><td>86.%</td><td>215</td><td>35</td></tr>
+<tr><td>guile-2.0.12</td><td>81.72757475083057%</td><td>246</td><td>55</td></tr>
+<tr><td>racket-v6.6</td><td>80.39867109634551%</td><td>242</td><td>59</td></tr>
+<tr><td>mit-9.2.1</td><td>82.05980066445183%</td><td>247</td><td>54</td></tr>
+<tr><td>chicken-4.11.0</td><td>91.36212624584718%</td><td>275</td><td>26</td></tr>
+<tr><td>larceny-v0.98</td><td>80.39867109634551%</td><td>242</td><td>59</td></tr>
+<tr><td>gambitc-unknown</td><td>68.43853820598007%</td><td>206</td><td>95</td></tr>
+<tr><td>chibi-0.7.3</td><td>100.%</td><td>301</td><td>0</td></tr>
+<tr><td>mosh-0.2.7</td><td>72.75747508305648%</td><td>219</td><td>82</td></tr>
+<tr><td>gauche-0.9.4</td><td>81.3953488372093%</td><td>245</td><td>56</td></tr>
+<tr><td>picrin-unknown</td><td>79.40199335548172%</td><td>239</td><td>62</td></tr>
 </tbody></table><table><thead><tr><th>Group</th><th>Ok</th><th>Error</th></tr></thead><tbody>
-<tr><td>r7rs/numeric</td><td>82.25352112676056</td><td>584</td><td>126</td></tr>
-<tr><td>srfi-1/srfi-1</td><td>66.25</td><td>53</td><td>27</td></tr>
-<tr><td>r7rs/boolean</td><td>93.33333333333333</td><td>28</td><td>2</td></tr>
-<tr><td>r7rs/vectors</td><td>76.29629629629629</td><td>206</td><td>64</td></tr>
 <tr><td>r7rs/pair-list</td><td>95.86206896551724</td><td>278</td><td>12</td></tr>
-<tr><td>r7rs/strings</td><td>79.72222222222223</td><td>287</td><td>73</td></tr>
-<tr><td>r7rs/characters</td><td>63.91304347826087</td><td>147</td><td>83</td></tr>
-<tr><td>r7rs/define</td><td>100.</td><td>50</td><td>0</td></tr>
+<tr><td>srfi-1/srfi-1</td><td>66.25</td><td>53</td><td>27</td></tr>
+<tr><td>r7rs/special-forms</td><td>100.</td><td>70</td><td>0</td></tr>
 <tr><td>r7rs/equivalence</td><td>96.78571428571429</td><td>271</td><td>9</td></tr>
 <tr><td>r7rs/control</td><td>75.</td><td>120</td><td>40</td></tr>
+<tr><td>r7rs/characters</td><td>63.91304347826087</td><td>147</td><td>83</td></tr>
+<tr><td>r7rs/vectors</td><td>76.29629629629629</td><td>206</td><td>64</td></tr>
 <tr><td>r7rs/symbol</td><td>92.5</td><td>37</td><td>3</td></tr>
-</tbody></table><section><h2>mosh-0.2.7</h2>
+<tr><td>r7rs/delay</td><td>40.</td><td>28</td><td>42</td></tr>
+<tr><td>r7rs/parameters</td><td>87.5</td><td>35</td><td>5</td></tr>
+<tr><td>r7rs/bytevectors</td><td>60.76923076923077</td><td>79</td><td>51</td></tr>
+<tr><td>r7rs/boolean</td><td>93.33333333333333</td><td>28</td><td>2</td></tr>
+<tr><td>r7rs/define</td><td>100.</td><td>50</td><td>0</td></tr>
+<tr><td>r7rs/macros</td><td>94.5</td><td>189</td><td>11</td></tr>
+<tr><td>r7rs/strings</td><td>79.72222222222223</td><td>287</td><td>73</td></tr>
+<tr><td>r7rs/numeric</td><td>82.25352112676056</td><td>584</td><td>126</td></tr>
+</tbody></table><section><h2>guile-2.0.12</h2>
+<h3>r7rs/pair-list</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(1 a) (assoc 1 '((1 a) (2 b) (3 c)) =)))</li>
+<li>(assert (equal? '(2 3) (member '2 '(1 2 3) =)))</li>
+</ul>
+<h3>srfi-1/srfi-1</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
+<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
+</ul>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
+<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
+<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
+<li>(assert (equal? #(1 2 3) (vector-map (lambda (x) (+ x 1)) #(0 1 2))))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? #(0 1 0) v))</li>
+<li>(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? #(0 1 1) v))</li>
+<li>(assert (equal? #(1 2 3 4) (vector-append #(1 2) #(3 4))))</li>
+<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3 4) 1 4) (assert (equal? #(1 2 3) v))</li>
+<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3) 1) (assert (equal? #(1 2 3) v))</li>
+<li>(define v (make-vector 3)) (vector-copy! v 0 #(1 2 3)) (assert (equal? #(1 2 3) v))</li>
+<li>(assert (let ((v #(5 1 2 3 5))) (equal? #(1 2 3) (vector-copy v 1 4))))</li>
+<li>(assert (let ((v #(5 1 2 3))) (equal? #(1 2 3) (vector-copy v 1))))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoox" 1 4)))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoo" 1)))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "foo")))</li>
+<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o #\x) 1 4)))</li>
+<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o) 1)))</li>
+<li>(assert (string=? "foo" (vector->string #(#\f #\o #\o))))</li>
+<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3 6) 1 4)))</li>
+<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3) 1)))</li>
+</ul>
+<h3>r7rs/symbol</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
+</ul>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? "A" (utf8->string (bytevector #x41))))</li>
+<li>(assert (equal? (bytevector 1 2 3 4 5 6) (bytevector-append (bytevector 1 2) (bytevector 3 4) (bytevector 5 6))))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3 4) 1 4) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3) 1) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3)) (bytevector-copy! b 0 (bytevector 1 2 3)) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3 5))) (equal? (bytevector 1 2 3) (bytevector-copy b 1 4))))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3))) (equal? (bytevector 1 2 3) (bytevector-copy b 1))))</li>
+<li>(assert (let ((b (bytevector 1 2 3))) (and (equal? b (bytevector-copy b)) (not (eq? b (bytevector-copy b))))))</li>
+<li>(define b (make-bytevector 5 3)) (bytevector-u8-set! b 0 5) (assert (= 5 (bytevector-u8-ref b 0)))</li>
+<li>(assert (= 3 (bytevector-u8-ref (bytevector 1 2 3) 2)))</li>
+<li>(assert (= 3 (bytevector-length (bytevector 1 2 3))))</li>
+<li>(assert (let ((b (make-bytevector 3 5))) (and (= 3 (bytevector-length b)) (= 5 (bytevector-u8-ref b 2)))))</li>
+<li>(assert (bytevector? (bytevector 1 2 3)))</li>
+</ul>
+<h3>r7rs/boolean</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (boolean=? #t #t))</li>
+</ul>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(x y x y) (let ((a 'a) (b 'b) (x 'x) (y 'y)) (let*-values (((a b) (values x y)) ((x y) (values a b))) (list a b x y)))))</li>
+<li>(assert (= 35 (let-values (((a b) (values 7 5))) (* a b))))</li>
+</ul>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+</ul>
 <h3>r7rs/numeric</h3>
 <h4>|ERROR|</h4>
 <ul>
+<li>(assert (exact? (exact 3.0)))</li>
+<li>(assert (inexact? (inexact 3)))</li>
 <li>(assert (= 25 (square 5)))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
+<li>(assert (infinite? +inf.0))</li>
+</ul>
+</section>
+<section><h2>racket-v6.6</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
+<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
+<li>(assert (= 1 (cons* 1)))</li>
+<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
+<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
+</ul>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
+<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (char=? #\a (char-downcase #\A)))</li>
+<li>(assert (char=? #\A (char-upcase #\a)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(assert (char-lower-case? #\a))</li>
+<li>(assert (char-upper-case? #\A))</li>
+<li>(assert (char-whitespace? #\space))</li>
+<li>(assert (char-numeric? #\1))</li>
+<li>(assert (char-alphabetic? #\a))</li>
+<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
+<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
+<li>(assert (char-ci>? #\c #\B #\a))</li>
+<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
+<li>(assert (char-ci=? #\a #\A #\a))</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+<li>(define integers (letrec ((next (lambda (n) (delay (cons n (next (+ n 1))))))) (next 0))) (define head (lambda (stream) (car (force stream)))) (define tail (lambda (stream) (cdr (force stream)))) (assert (= 2 (head (tail (tail integers)))))</li>
+<li>(assert (equal? '(3 3) (let ((p (delay (+ 1 2)))) (list (force p) (force p)))))</li>
+<li>(assert (= (force (delay (+ 1 2))) 3))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define p (make-parameter 3 (lambda (x) (+ x 1)))) (assert (= (p) 4))</li>
+</ul>
+<h3>r7rs/bytevectors</h3>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
+<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (&lt; (abs (- (angle (make-polar 3 1)) 1)) 0.000001))</li>
+<li>(assert (= 3 (magnitude (make-polar 3 1))))</li>
+<li>(assert (= 2 (imag-part (make-rectangular 1 2))))</li>
+<li>(assert (= 1 (real-part (make-rectangular 1 2))))</li>
+<li>(assert (= 1+2i (make-rectangular 1 2)))</li>
+<li>(assert (and (> (sqrt 17) 4.123) (&lt; (sqrt 17) 4.124)))</li>
 <li>(assert (and (> (atan 2 1) 1.107) (&lt; (atan 2 1) 1.108)))</li>
+<li>(assert (and (> (atan 0.5) 0.463) (&lt; (atan 0.5) 0.464)))</li>
+<li>(assert (and (> (acos 0.5) 1.047) (&lt; (acos 0.5) 1.048)))</li>
+<li>(assert (and (> (asin 0.5) 0.523) (&lt; (asin 0.5) 0.524)))</li>
+<li>(assert (and (> (tan 1) 1.557) (&lt; (tan 1) 1.558)))</li>
+<li>(assert (and (> (cos 5) 0.283) (&lt; (cos 3) 0.284)))</li>
+<li>(assert (and (> (sin 3) 0.141) (&lt; (sin 3) 0.142)))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (and (> (log 15) 2.70) (&lt; (log 15) 2.71)))</li>
+<li>(assert (and (> (exp 3) 20.085) (&lt; (exp 3) 20.086)))</li>
+<li>(assert (nan? +nan.0))</li>
+<li>(assert (infinite? +inf.0))</li>
+<li>(assert (finite? 123))</li>
+</ul>
+</section>
+<section><h2>mit-9.2.1</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
+<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
+</ul>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(call/cc (lambda (k) k))</li>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
+<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
+<li>(assert (char-ci>? #\c #\B #\a))</li>
+<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
+<li>(assert (char-ci=? #\a #\A #\a))</li>
+<li>(assert (char>=? #\b #\b #\a #\a))</li>
+<li>(assert (char&lt;=? #\a #\a #\b #\b))</li>
+<li>(assert (char>? #\c #\b #\a))</li>
+<li>(assert (char&lt;? #\a #\b #\c))</li>
+<li>(assert (char=? #\a #\a #\a))</li>
+<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
+</ul>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? "A" (utf8->string (bytevector #x41))))</li>
+<li>(assert (equal? (bytevector 1 2 3 4 5 6) (bytevector-append (bytevector 1 2) (bytevector 3 4) (bytevector 5 6))))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3 4) 1 4) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3) 1) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3)) (bytevector-copy! b 0 (bytevector 1 2 3)) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3 5))) (equal? (bytevector 1 2 3) (bytevector-copy b 1 4))))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3))) (equal? (bytevector 1 2 3) (bytevector-copy b 1))))</li>
+<li>(assert (let ((b (bytevector 1 2 3))) (and (equal? b (bytevector-copy b)) (not (eq? b (bytevector-copy b))))))</li>
+<li>(define b (make-bytevector 5 3)) (bytevector-u8-set! b 0 5) (assert (= 5 (bytevector-u8-ref b 0)))</li>
+<li>(assert (= 3 (bytevector-u8-ref (bytevector 1 2 3) 2)))</li>
+<li>(assert (= 3 (bytevector-length (bytevector 1 2 3))))</li>
+<li>(assert (let ((b (make-bytevector 3 5))) (and (= 3 (bytevector-length b)) (= 5 (bytevector-u8-ref b 2)))))</li>
+<li>(assert (bytevector? (bytevector 1 2 3)))</li>
+</ul>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(x y x y) (let ((a 'a) (b 'b) (x 'x) (y 'y)) (let*-values (((a b) (values x y)) ((x y) (values a b))) (list a b x y)))))</li>
+<li>(assert (= 35 (let-values (((a b) (values 7 5))) (* a b))))</li>
+<li>(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w y) 'semivowel) (else => (lambda (x) x)))))</li>
+</ul>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string>=? "b" "b" "a" "a"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string&lt;=? "a" "a" "b" "b"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string>? "c" "b" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string&lt;? "a" "b" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+<li>(assert (string=? "foo" "foo" (string #\f #\o #\o)))</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (nan? +nan.0))</li>
+<li>(assert (infinite? +inf.0))</li>
+<li>(assert (finite? 123))</li>
+</ul>
+</section>
+<section><h2>chicken-4.11.0</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
+<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
+<li>(assert (char-ci>? #\c #\B #\a))</li>
+<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
+<li>(assert (char-ci=? #\a #\A #\a))</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
 <li>(assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
 <li>(assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
 <li>(assert (= 1 (truncate-remainder 10 -3)))</li>
 <li>(assert (= -3 (truncate-quotient 10 -3)))</li>
 <li>(assert (= -2 (floor-remainder 10 -3)))</li>
 <li>(assert (= -4 (floor-quotient 10 -3)))</li>
+<li>(assert (nan? +nan.0))</li>
+<li>(assert (infinite? +inf.0))</li>
 <li>(assert (exact-integer? 32))</li>
+</ul>
+</section>
+<section><h2>larceny-v0.98</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
+<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
+<li>(assert (= 1 (cons* 1)))</li>
+<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
+<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
+</ul>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
+<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
+<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (char=? #\a (char-downcase #\A)))</li>
+<li>(assert (char=? #\A (char-upcase #\a)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(assert (char-lower-case? #\a))</li>
+<li>(assert (char-upper-case? #\A))</li>
+<li>(assert (char-whitespace? #\space))</li>
+<li>(assert (char-numeric? #\1))</li>
+<li>(assert (char-alphabetic? #\a))</li>
+<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
+<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
+<li>(assert (char-ci>? #\c #\B #\a))</li>
+<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
+<li>(assert (char-ci=? #\a #\A #\a))</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+<li>(define integers (letrec ((next (lambda (n) (delay (cons n (next (+ n 1))))))) (next 0))) (define head (lambda (stream) (car (force stream)))) (define tail (lambda (stream) (cdr (force stream)))) (assert (= 2 (head (tail (tail integers)))))</li>
+<li>(assert (equal? '(3 3) (let ((p (delay (+ 1 2)))) (list (force p) (force p)))))</li>
+<li>(assert (= (force (delay (+ 1 2))) 3))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
+<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (&lt; (abs (- (angle (make-polar 3 1)) 1)) 0.000001))</li>
+<li>(assert (= 3 (magnitude (make-polar 3 1))))</li>
+<li>(assert (= 2 (imag-part (make-rectangular 1 2))))</li>
+<li>(assert (= 1 (real-part (make-rectangular 1 2))))</li>
+<li>(assert (= 1+2i (make-rectangular 1 2)))</li>
+<li>(assert (and (> (sqrt 17) 4.123) (&lt; (sqrt 17) 4.124)))</li>
+<li>(assert (and (> (atan 2 1) 1.107) (&lt; (atan 2 1) 1.108)))</li>
+<li>(assert (and (> (atan 0.5) 0.463) (&lt; (atan 0.5) 0.464)))</li>
+<li>(assert (and (> (acos 0.5) 1.047) (&lt; (acos 0.5) 1.048)))</li>
+<li>(assert (and (> (asin 0.5) 0.523) (&lt; (asin 0.5) 0.524)))</li>
+<li>(assert (and (> (tan 1) 1.557) (&lt; (tan 1) 1.558)))</li>
+<li>(assert (and (> (cos 5) 0.283) (&lt; (cos 3) 0.284)))</li>
+<li>(assert (and (> (sin 3) 0.141) (&lt; (sin 3) 0.142)))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (and (> (log 15) 2.70) (&lt; (log 15) 2.71)))</li>
+<li>(assert (and (> (exp 3) 20.085) (&lt; (exp 3) 20.086)))</li>
+<li>(assert (nan? +nan.0))</li>
+<li>(assert (infinite? +inf.0))</li>
+<li>(assert (finite? 123))</li>
+</ul>
+</section>
+<section><h2>gambitc-unknown</h2>
+<h3>r7rs/pair-list</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (let ((l '(1 2 3))) (and (not (eq? l (list-copy l))) (equal? l (list-copy l)))))</li>
+<li>(assert (equal? '(1 a) (assoc 1 '((1 a) (2 b) (3 c)) =)))</li>
+<li>(assert (equal? '(2 3) (member '2 '(1 2 3) =)))</li>
+<li>(define l (list 1 2 3)) (list-set! l 1 5) (assert (= 5 (list-ref l 1)))</li>
+<li>(assert (= 5 (length (make-list 5))))</li>
 </ul>
 <h3>srfi-1/srfi-1</h3>
 <h4>|ERROR|</h4>
 <ul>
 <li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
+<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
+<li>(assert (= 1 (cons* 1)))</li>
+<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
 <li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
 </ul>
-<h3>r7rs/boolean</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
+<li>(let ((a (make-list 3)) (b (make-list 3))) (assert (not (eqv? a b))))</li>
+<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
+</ul>
+<h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
+<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
+<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
+<li>(assert (equal? #(1 2 3) (vector-map (lambda (x) (+ x 1)) #(0 1 2))))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
+</ul>
 <h3>r7rs/vectors</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -70,6 +556,104 @@
 <li>(assert (equal? #(1 2 3) (vector 1 2 3)))</li>
 <li>(assert (vector? #(1 2 3)))</li>
 </ul>
+<h3>r7rs/symbol</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
+</ul>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? "A" (utf8->string (bytevector #x41))))</li>
+<li>(assert (equal? (bytevector 1 2 3 4 5 6) (bytevector-append (bytevector 1 2) (bytevector 3 4) (bytevector 5 6))))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3 4) 1 4) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3) 1) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3)) (bytevector-copy! b 0 (bytevector 1 2 3)) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3 5))) (equal? (bytevector 1 2 3) (bytevector-copy b 1 4))))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3))) (equal? (bytevector 1 2 3) (bytevector-copy b 1))))</li>
+<li>(assert (let ((b (bytevector 1 2 3))) (and (equal? b (bytevector-copy b)) (not (eq? b (bytevector-copy b))))))</li>
+<li>(define b (make-bytevector 5 3)) (bytevector-u8-set! b 0 5) (assert (= 5 (bytevector-u8-ref b 0)))</li>
+<li>(assert (= 3 (bytevector-u8-ref (bytevector 1 2 3) 2)))</li>
+<li>(assert (= 3 (bytevector-length (bytevector 1 2 3))))</li>
+<li>(assert (let ((b (make-bytevector 3 5))) (and (= 3 (bytevector-length b)) (= 5 (bytevector-u8-ref b 2)))))</li>
+<li>(assert (bytevector? (bytevector 1 2 3)))</li>
+</ul>
+<h3>r7rs/boolean</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (boolean=? #t #t))</li>
+</ul>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(x y x y) (let ((a 'a) (b 'b) (x 'x) (y 'y)) (let*-values (((a b) (values x y)) ((x y) (values a b))) (list a b x y)))))</li>
+<li>(assert (= 35 (let-values (((a b) (values 7 5))) (* a b))))</li>
+<li>(unless #f "foo" 'ok)</li>
+<li>(when #t "foo" 'ok)</li>
+<li>(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w y) 'semivowel) (else => (lambda (x) x)))))</li>
+</ul>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1 2) (assert (string=? "xax" s))</li>
+<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1) (assert (string=? "xaa" s))</li>
+<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1 3) (assert (string=? "fo" (substring s 0 2)))</li>
+<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1) (assert (string=? "foo" (substring s 0 3)))</li>
+<li>(define s (make-string 5)) (string-copy! s 0 "foo") (assert (string=? "foo" (substring s 0 3)))</li>
+<li>(assert (string=? "foo" (string-copy "xfoox" 1 4)))</li>
+<li>(assert (string=? "foo" (string-copy "xfoo" 1)))</li>
+<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoox" 1 4)))</li>
+<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoo" 1)))</li>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
+<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (exact? (exact 3.0)))</li>
+<li>(assert (inexact? (inexact 3)))</li>
+<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
+<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
+<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
+<li>(assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
+<li>(assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
+<li>(assert (= 1 (truncate-remainder 10 -3)))</li>
+<li>(assert (= -3 (truncate-quotient 10 -3)))</li>
+<li>(assert (= -2 (floor-remainder 10 -3)))</li>
+<li>(assert (= -4 (floor-quotient 10 -3)))</li>
+<li>(assert (exact-integer? 32))</li>
+</ul>
+</section>
+<section><h2>chibi-0.7.3</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h3>r7rs/control</h3>
+<h3>r7rs/characters</h3>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h3>r7rs/numeric</h3>
+</section>
+<section><h2>mosh-0.2.7</h2>
 <h3>r7rs/pair-list</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -79,28 +663,13 @@
 <li>(define l (list 1 2 3)) (list-set! l 1 5) (assert (= 5 (list-ref l 1)))</li>
 <li>(assert (= 5 (length (make-list 5))))</li>
 </ul>
-<h3>r7rs/strings</h3>
+<h3>srfi-1/srfi-1</h3>
 <h4>|ERROR|</h4>
 <ul>
-<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1 2) (assert (string=? "xax" s))</li>
-<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1) (assert (string=? "xaa" s))</li>
-<li>(define s (make-string 3 #\x)) (string-fill! s #\a) (assert (string=? "aaa" s))</li>
-<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1 3) (assert (string=? "fo" (substring s 0 2)))</li>
-<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1) (assert (string=? "foo" (substring s 0 3)))</li>
-<li>(define s (make-string 5)) (string-copy! s 0 "foo") (assert (string=? "foo" (substring s 0 3)))</li>
-<li>(assert (string=? "foo" (string-copy "xfoox" 1 4)))</li>
-<li>(assert (string=? "foo" (string-copy "xfoo" 1)))</li>
-<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoox" 1 4)))</li>
-<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoo" 1)))</li>
-<li>"\a\b\t\n\r\"\\\|\</li>
+<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
+<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
 </ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
-</ul>
-<h3>r7rs/define</h3>
+<h3>r7rs/special-forms</h3>
 <h3>r7rs/equivalence</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -118,22 +687,176 @@
 <li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
 <li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
 </ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>chibi-0.7.3</h2>
-<h3>r7rs/numeric</h3>
-<h3>srfi-1/srfi-1</h3>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
 <h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
+</ul>
+<h3>r7rs/vectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? #(0 1 0) v))</li>
+<li>(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? #(0 1 1) v))</li>
+<li>(define v (make-vector 3 0)) (vector-fill! v 1) (assert (equal? #(1 1 1) v))</li>
+<li>(assert (equal? #(1 2 3 4) (vector-append #(1 2) #(3 4))))</li>
+<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3 4) 1 4) (assert (equal? #(1 2 3) v))</li>
+<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3) 1) (assert (equal? #(1 2 3) v))</li>
+<li>(define v (make-vector 3)) (vector-copy! v 0 #(1 2 3)) (assert (equal? #(1 2 3) v))</li>
+<li>(assert (let ((v #(5 1 2 3 5))) (equal? #(1 2 3) (vector-copy v 1 4))))</li>
+<li>(assert (let ((v #(5 1 2 3))) (equal? #(1 2 3) (vector-copy v 1))))</li>
+<li>(assert (let ((v #(1 2 3))) (and (equal? v (vector-copy v)) (not (eq? v (vector-copy v))))))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoox" 1 4)))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoo" 1)))</li>
+<li>(assert (equal? #(#\f #\o #\o) (string->vector "foo")))</li>
+<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o #\x) 1 4)))</li>
+<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o) 1)))</li>
+<li>(assert (string=? "foo" (vector->string #(#\f #\o #\o))))</li>
+<li>(assert (equal? #(1 2 3) (list->vector '(1 2 3))))</li>
+<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3 6) 1 4)))</li>
+<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3) 1)))</li>
+<li>(assert (equal? '(1 2 3) (vector->list #(1 2 3))))</li>
+<li>(assert (= 3 (vector-ref #(1 2 3 4 5) 2)))</li>
+<li>(assert (= 5 (vector-length #(1 2 3 4 5))))</li>
+<li>(assert (equal? #(1 2 3) (vector 1 2 3)))</li>
+<li>(assert (vector? #(1 2 3)))</li>
+</ul>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (parameterize ((p 7)) (assert (= (p) 7))))</li>
+<li>(define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (assert (= (p) 5)))</li>
+<li>(define p (make-parameter 3 (lambda (x) (+ x 1)))) (assert (= (p) 4))</li>
+<li>(define p (make-parameter 3))</li>
+</ul>
+<h3>r7rs/bytevectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? "A" (utf8->string (bytevector #x41))))</li>
+<li>(assert (equal? (bytevector 1 2 3 4 5 6) (bytevector-append (bytevector 1 2) (bytevector 3 4) (bytevector 5 6))))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3 4) 1 4) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3 0)) (bytevector-copy! b 0 (bytevector 5 1 2 3) 1) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(define b (make-bytevector 3)) (bytevector-copy! b 0 (bytevector 1 2 3)) (assert (equal? (bytevector 1 2 3) b))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3 5))) (equal? (bytevector 1 2 3) (bytevector-copy b 1 4))))</li>
+<li>(assert (let ((b (bytevector 5 1 2 3))) (equal? (bytevector 1 2 3) (bytevector-copy b 1))))</li>
+<li>(assert (let ((b (bytevector 1 2 3))) (and (equal? b (bytevector-copy b)) (not (eq? b (bytevector-copy b))))))</li>
+<li>(assert (= 3 (bytevector-u8-ref (bytevector 1 2 3) 2)))</li>
+<li>(assert (= 3 (bytevector-length (bytevector 1 2 3))))</li>
+<li>(assert (bytevector? (bytevector 1 2 3)))</li>
+</ul>
+<h3>r7rs/boolean</h3>
 <h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w y) 'semivowel) (else => (lambda (x) x)))))</li>
+</ul>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1 2) (assert (string=? "xax" s))</li>
+<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1) (assert (string=? "xaa" s))</li>
+<li>(define s (make-string 3 #\x)) (string-fill! s #\a) (assert (string=? "aaa" s))</li>
+<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1 3) (assert (string=? "fo" (substring s 0 2)))</li>
+<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1) (assert (string=? "foo" (substring s 0 3)))</li>
+<li>(define s (make-string 5)) (string-copy! s 0 "foo") (assert (string=? "foo" (substring s 0 3)))</li>
+<li>(assert (string=? "foo" (string-copy "xfoox" 1 4)))</li>
+<li>(assert (string=? "foo" (string-copy "xfoo" 1)))</li>
+<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoox" 1 4)))</li>
+<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoo" 1)))</li>
+<li>"\a\b\t\n\r\"\\\|\</li>
+</ul>
+<h3>r7rs/numeric</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (= 25 (square 5)))</li>
+<li>(assert (and (> (atan 2 1) 1.107) (&lt; (atan 2 1) 1.108)))</li>
+<li>(assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
+<li>(assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
+<li>(assert (= 1 (truncate-remainder 10 -3)))</li>
+<li>(assert (= -3 (truncate-quotient 10 -3)))</li>
+<li>(assert (= -2 (floor-remainder 10 -3)))</li>
+<li>(assert (= -4 (floor-quotient 10 -3)))</li>
+<li>(assert (exact-integer? 32))</li>
+</ul>
+</section>
+<section><h2>gauche-0.9.4</h2>
+<h3>r7rs/pair-list</h3>
+<h3>srfi-1/srfi-1</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
+<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
+<li>(assert (= 1 (cons* 1)))</li>
+<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
+<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
+</ul>
+<h3>r7rs/special-forms</h3>
 <h3>r7rs/equivalence</h3>
 <h3>r7rs/control</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
+</ul>
+<h3>r7rs/characters</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
+<li>(assert (char=? #\a (char-downcase #\A)))</li>
+<li>(assert (char=? #\A (char-upcase #\a)))</li>
+<li>(assert (= 3 (digit-value #\3)))</li>
+<li>(assert (char-lower-case? #\a))</li>
+<li>(assert (char-upper-case? #\A))</li>
+<li>(assert (char-whitespace? #\space))</li>
+<li>(assert (char-numeric? #\1))</li>
+<li>(assert (char-alphabetic? #\a))</li>
+<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
+<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
+<li>(assert (char-ci>? #\c #\B #\a))</li>
+<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
+<li>(assert (char-ci=? #\a #\A #\a))</li>
+</ul>
+<h3>r7rs/vectors</h3>
 <h3>r7rs/symbol</h3>
-</section>
-<section><h2>larceny-v0.98</h2>
+<h3>r7rs/delay</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+<li>(define integers (letrec ((next (lambda (n) (delay (cons n (next (+ n 1))))))) (next 0))) (define head (lambda (stream) (car (force stream)))) (define tail (lambda (stream) (cdr (force stream)))) (assert (= 2 (head (tail (tail integers)))))</li>
+<li>(assert (equal? '(3 3) (let ((p (delay (+ 1 2)))) (list (force p) (force p)))))</li>
+<li>(assert (= (force (delay (+ 1 2))) 3))</li>
+</ul>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
+<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+</ul>
 <h3>r7rs/numeric</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -157,6 +880,9 @@
 <li>(assert (infinite? +inf.0))</li>
 <li>(assert (finite? 123))</li>
 </ul>
+</section>
+<section><h2>picrin-unknown</h2>
+<h3>r7rs/pair-list</h3>
 <h3>srfi-1/srfi-1</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -166,20 +892,13 @@
 <li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
 <li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
 </ul>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
+<h3>r7rs/special-forms</h3>
+<h3>r7rs/equivalence</h3>
+<h3>r7rs/control</h3>
 <h4>|ERROR|</h4>
 <ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
-<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
+<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
 </ul>
 <h3>r7rs/characters</h3>
 <h4>|ERROR|</h4>
@@ -199,21 +918,40 @@
 <li>(assert (char-ci&lt;? #\a #\B #\c))</li>
 <li>(assert (char-ci=? #\a #\A #\a))</li>
 </ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h3>r7rs/control</h3>
+<h3>r7rs/vectors</h3>
+<h3>r7rs/symbol</h3>
+<h3>r7rs/delay</h3>
 <h4>|ERROR|</h4>
 <ul>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
-<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
-<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
+<li>(assert (promise? (delay-force 3)))</li>
+<li>(assert (= 3 (force (make-promise 3))))</li>
+<li>(assert (promise? (make-promise 3)))</li>
+<li>(assert (promise? (delay 3)))</li>
+<li>(define integers (letrec ((next (lambda (n) (delay (cons n (next (+ n 1))))))) (next 0))) (define head (lambda (stream) (car (force stream)))) (define tail (lambda (stream) (cdr (force stream)))) (assert (= 2 (head (tail (tail integers)))))</li>
+<li>(assert (equal? '(3 3) (let ((p (delay (+ 1 2)))) (list (force p) (force p)))))</li>
+<li>(assert (= (force (delay (+ 1 2))) 3))</li>
 </ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>picrin-unknown</h2>
+<h3>r7rs/parameters</h3>
+<h3>r7rs/bytevectors</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (equal? "A" (utf8->string (bytevector #x41))))</li>
+</ul>
+<h3>r7rs/boolean</h3>
+<h3>r7rs/define</h3>
+<h3>r7rs/macros</h3>
+<h3>r7rs/strings</h3>
+<h4>|ERROR|</h4>
+<ul>
+<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
+<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
+<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
+<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
+<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
+<li>(assert (string-ci>? "c" "B" "a"))</li>
+<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
+<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
+</ul>
 <h3>r7rs/numeric</h3>
 <h4>|ERROR|</h4>
 <ul>
@@ -242,522 +980,5 @@
 <li>(assert (infinite? +inf.0))</li>
 <li>(assert (finite? 123))</li>
 <li>(assert (rational? 3/4))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
-<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
-<li>(assert (= 1 (cons* 1)))</li>
-<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
-<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
-</ul>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
-<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (char=? #\a (char-downcase #\A)))</li>
-<li>(assert (char=? #\A (char-upcase #\a)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(assert (char-lower-case? #\a))</li>
-<li>(assert (char-upper-case? #\A))</li>
-<li>(assert (char-whitespace? #\space))</li>
-<li>(assert (char-numeric? #\1))</li>
-<li>(assert (char-alphabetic? #\a))</li>
-<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
-<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
-<li>(assert (char-ci>? #\c #\B #\a))</li>
-<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
-<li>(assert (char-ci=? #\a #\A #\a))</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>gauche-0.9.4</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (&lt; (abs (- (angle (make-polar 3 1)) 1)) 0.000001))</li>
-<li>(assert (= 3 (magnitude (make-polar 3 1))))</li>
-<li>(assert (= 2 (imag-part (make-rectangular 1 2))))</li>
-<li>(assert (= 1 (real-part (make-rectangular 1 2))))</li>
-<li>(assert (= 1+2i (make-rectangular 1 2)))</li>
-<li>(assert (and (> (sqrt 17) 4.123) (&lt; (sqrt 17) 4.124)))</li>
-<li>(assert (and (> (atan 2 1) 1.107) (&lt; (atan 2 1) 1.108)))</li>
-<li>(assert (and (> (atan 0.5) 0.463) (&lt; (atan 0.5) 0.464)))</li>
-<li>(assert (and (> (acos 0.5) 1.047) (&lt; (acos 0.5) 1.048)))</li>
-<li>(assert (and (> (asin 0.5) 0.523) (&lt; (asin 0.5) 0.524)))</li>
-<li>(assert (and (> (tan 1) 1.557) (&lt; (tan 1) 1.558)))</li>
-<li>(assert (and (> (cos 5) 0.283) (&lt; (cos 3) 0.284)))</li>
-<li>(assert (and (> (sin 3) 0.141) (&lt; (sin 3) 0.142)))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (and (> (log 15) 2.70) (&lt; (log 15) 2.71)))</li>
-<li>(assert (and (> (exp 3) 20.085) (&lt; (exp 3) 20.086)))</li>
-<li>(assert (nan? +nan.0))</li>
-<li>(assert (infinite? +inf.0))</li>
-<li>(assert (finite? 123))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
-<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
-<li>(assert (= 1 (cons* 1)))</li>
-<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
-<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
-</ul>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
-<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (char=? #\a (char-downcase #\A)))</li>
-<li>(assert (char=? #\A (char-upcase #\a)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(assert (char-lower-case? #\a))</li>
-<li>(assert (char-upper-case? #\A))</li>
-<li>(assert (char-whitespace? #\space))</li>
-<li>(assert (char-numeric? #\1))</li>
-<li>(assert (char-alphabetic? #\a))</li>
-<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
-<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
-<li>(assert (char-ci>? #\c #\B #\a))</li>
-<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
-<li>(assert (char-ci=? #\a #\A #\a))</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>guile-2.0.12</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (exact? (exact 3.0)))</li>
-<li>(assert (inexact? (inexact 3)))</li>
-<li>(assert (= 25 (square 5)))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
-<li>(assert (infinite? +inf.0))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h3>r7rs/boolean</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (boolean=? #t #t))</li>
-</ul>
-<h3>r7rs/vectors</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? #(0 1 0) v))</li>
-<li>(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? #(0 1 1) v))</li>
-<li>(assert (equal? #(1 2 3 4) (vector-append #(1 2) #(3 4))))</li>
-<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3 4) 1 4) (assert (equal? #(1 2 3) v))</li>
-<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3) 1) (assert (equal? #(1 2 3) v))</li>
-<li>(define v (make-vector 3)) (vector-copy! v 0 #(1 2 3)) (assert (equal? #(1 2 3) v))</li>
-<li>(assert (let ((v #(5 1 2 3 5))) (equal? #(1 2 3) (vector-copy v 1 4))))</li>
-<li>(assert (let ((v #(5 1 2 3))) (equal? #(1 2 3) (vector-copy v 1))))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoox" 1 4)))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoo" 1)))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "foo")))</li>
-<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o #\x) 1 4)))</li>
-<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o) 1)))</li>
-<li>(assert (string=? "foo" (vector->string #(#\f #\o #\o))))</li>
-<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3 6) 1 4)))</li>
-<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3) 1)))</li>
-</ul>
-<h3>r7rs/pair-list</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (equal? '(1 a) (assoc 1 '((1 a) (2 b) (3 c)) =)))</li>
-<li>(assert (equal? '(2 3) (member '2 '(1 2 3) =)))</li>
-</ul>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
-<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
-</ul>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
-<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
-<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
-<li>(assert (equal? #(1 2 3) (vector-map (lambda (x) (+ x 1)) #(0 1 2))))</li>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
-</ul>
-</section>
-<section><h2>chicken-4.11.0</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
-<li>(assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
-<li>(assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
-<li>(assert (= 1 (truncate-remainder 10 -3)))</li>
-<li>(assert (= -3 (truncate-quotient 10 -3)))</li>
-<li>(assert (= -2 (floor-remainder 10 -3)))</li>
-<li>(assert (= -4 (floor-quotient 10 -3)))</li>
-<li>(assert (nan? +nan.0))</li>
-<li>(assert (infinite? +inf.0))</li>
-<li>(assert (exact-integer? 32))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
-<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
-<li>(assert (char-ci>? #\c #\B #\a))</li>
-<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
-<li>(assert (char-ci=? #\a #\A #\a))</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>gambitc-unknown</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (exact? (exact 3.0)))</li>
-<li>(assert (inexact? (inexact 3)))</li>
-<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (= 1/3 (rationalize (exact .3) 1/10)))</li>
-<li>(assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
-<li>(assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))</li>
-<li>(assert (= 1 (truncate-remainder 10 -3)))</li>
-<li>(assert (= -3 (truncate-quotient 10 -3)))</li>
-<li>(assert (= -2 (floor-remainder 10 -3)))</li>
-<li>(assert (= -4 (floor-quotient 10 -3)))</li>
-<li>(assert (exact-integer? 32))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
-<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
-<li>(assert (= 1 (cons* 1)))</li>
-<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
-<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
-</ul>
-<h3>r7rs/boolean</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (boolean=? #t #t))</li>
-</ul>
-<h3>r7rs/vectors</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? #(0 1 0) v))</li>
-<li>(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? #(0 1 1) v))</li>
-<li>(define v (make-vector 3 0)) (vector-fill! v 1) (assert (equal? #(1 1 1) v))</li>
-<li>(assert (equal? #(1 2 3 4) (vector-append #(1 2) #(3 4))))</li>
-<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3 4) 1 4) (assert (equal? #(1 2 3) v))</li>
-<li>(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3) 1) (assert (equal? #(1 2 3) v))</li>
-<li>(define v (make-vector 3)) (vector-copy! v 0 #(1 2 3)) (assert (equal? #(1 2 3) v))</li>
-<li>(assert (let ((v #(5 1 2 3 5))) (equal? #(1 2 3) (vector-copy v 1 4))))</li>
-<li>(assert (let ((v #(5 1 2 3))) (equal? #(1 2 3) (vector-copy v 1))))</li>
-<li>(assert (let ((v #(1 2 3))) (and (equal? v (vector-copy v)) (not (eq? v (vector-copy v))))))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoox" 1 4)))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "xfoo" 1)))</li>
-<li>(assert (equal? #(#\f #\o #\o) (string->vector "foo")))</li>
-<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o #\x) 1 4)))</li>
-<li>(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o) 1)))</li>
-<li>(assert (string=? "foo" (vector->string #(#\f #\o #\o))))</li>
-<li>(assert (equal? #(1 2 3) (list->vector '(1 2 3))))</li>
-<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3 6) 1 4)))</li>
-<li>(assert (equal? '(1 2 3) (vector->list #(5 1 2 3) 1)))</li>
-<li>(assert (equal? '(1 2 3) (vector->list #(1 2 3))))</li>
-<li>(assert (= 3 (vector-ref #(1 2 3 4 5) 2)))</li>
-<li>(assert (= 5 (vector-length #(1 2 3 4 5))))</li>
-<li>(assert (equal? #(1 2 3) (vector 1 2 3)))</li>
-<li>(assert (vector? #(1 2 3)))</li>
-</ul>
-<h3>r7rs/pair-list</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (let ((l '(1 2 3))) (and (not (eq? l (list-copy l))) (equal? l (list-copy l)))))</li>
-<li>(assert (equal? '(1 a) (assoc 1 '((1 a) (2 b) (3 c)) =)))</li>
-<li>(assert (equal? '(2 3) (member '2 '(1 2 3) =)))</li>
-<li>(define l (list 1 2 3)) (list-set! l 1 5) (assert (= 5 (list-ref l 1)))</li>
-<li>(assert (= 5 (length (make-list 5))))</li>
-</ul>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1 2) (assert (string=? "xax" s))</li>
-<li>(define s (make-string 3 #\x)) (string-fill! s #\a 1) (assert (string=? "xaa" s))</li>
-<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1 3) (assert (string=? "fo" (substring s 0 2)))</li>
-<li>(define s (make-string 5 #\x)) (string-copy! s 0 "xfoo" 1) (assert (string=? "foo" (substring s 0 3)))</li>
-<li>(define s (make-string 5)) (string-copy! s 0 "foo") (assert (string=? "foo" (substring s 0 3)))</li>
-<li>(assert (string=? "foo" (string-copy "xfoox" 1 4)))</li>
-<li>(assert (string=? "foo" (string-copy "xfoo" 1)))</li>
-<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoox" 1 4)))</li>
-<li>(assert (equal? '(#\f #\o #\o) (string->list "xfoo" 1)))</li>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
-<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
-<li>(let ((a (make-list 3)) (b (make-list 3))) (assert (not (eqv? a b))))</li>
-<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
-</ul>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
-<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
-<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
-<li>(assert (equal? #(1 2 3) (vector-map (lambda (x) (+ x 1)) #(0 1 2))))</li>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
-</ul>
-</section>
-<section><h2>racket-v6.6</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (&lt; (abs (- (angle (make-polar 3 1)) 1)) 0.000001))</li>
-<li>(assert (= 3 (magnitude (make-polar 3 1))))</li>
-<li>(assert (= 2 (imag-part (make-rectangular 1 2))))</li>
-<li>(assert (= 1 (real-part (make-rectangular 1 2))))</li>
-<li>(assert (= 1+2i (make-rectangular 1 2)))</li>
-<li>(assert (and (> (sqrt 17) 4.123) (&lt; (sqrt 17) 4.124)))</li>
-<li>(assert (and (> (atan 2 1) 1.107) (&lt; (atan 2 1) 1.108)))</li>
-<li>(assert (and (> (atan 0.5) 0.463) (&lt; (atan 0.5) 0.464)))</li>
-<li>(assert (and (> (acos 0.5) 1.047) (&lt; (acos 0.5) 1.048)))</li>
-<li>(assert (and (> (asin 0.5) 0.523) (&lt; (asin 0.5) 0.524)))</li>
-<li>(assert (and (> (tan 1) 1.557) (&lt; (tan 1) 1.558)))</li>
-<li>(assert (and (> (cos 5) 0.283) (&lt; (cos 3) 0.284)))</li>
-<li>(assert (and (> (sin 3) 0.141) (&lt; (sin 3) 0.142)))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (and (> (log 15) 2.70) (&lt; (log 15) 2.71)))</li>
-<li>(assert (and (> (exp 3) 20.085) (&lt; (exp 3) 20.086)))</li>
-<li>(assert (nan? +nan.0))</li>
-<li>(assert (infinite? +inf.0))</li>
-<li>(assert (finite? 123))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (equal? '(#t #t #t) (filter-map odd? '(1 2 3 4 5))))</li>
-<li>(assert (equal? '(1 3 5) (filter odd? '(1 2 3 4 5))))</li>
-<li>(assert (= 1 (cons* 1)))</li>
-<li>(assert (equal? '(1 2 3 . 4) (cons* 1 2 3 4)))</li>
-<li>(assert (equal? '(2 . 1) (xcons 1 2)))</li>
-</ul>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string=? "foo" (string-downcase "FOO")))</li>
-<li>(assert (string=? "FOO" (string-upcase "foo")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (char=? #\a (char-downcase #\A)))</li>
-<li>(assert (char=? #\A (char-upcase #\a)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(assert (char-lower-case? #\a))</li>
-<li>(assert (char-upper-case? #\A))</li>
-<li>(assert (char-whitespace? #\space))</li>
-<li>(assert (char-numeric? #\1))</li>
-<li>(assert (char-alphabetic? #\a))</li>
-<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
-<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
-<li>(assert (char-ci>? #\c #\B #\a))</li>
-<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
-<li>(assert (char-ci=? #\a #\A #\a))</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(let ((v '())) (string-for-each (lambda (c x) (set! v (cons (char->integer c) v))) "abcde" "abcdef") (assert (equal? '(101 100 99 98 97) v)))</li>
-<li>(define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))</li>
-<li>(assert (string=? "StUdLyCaPs" (string-map (lambda (c k) ((if (eqv? k #\u) char-upcase char-downcase) c)) "studlycaps xxx" "ululululul")))</li>
-<li>(assert (string=? "ABC" (string-map char-upcase "abc")))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-</section>
-<section><h2>mit-9.2.1</h2>
-<h3>r7rs/numeric</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))</li>
-<li>(assert (and (> (log 10 4) 1.660) (&lt; (log 10 4) 1.661)))</li>
-<li>(assert (nan? +nan.0))</li>
-<li>(assert (infinite? +inf.0))</li>
-<li>(assert (finite? 123))</li>
-</ul>
-<h3>srfi-1/srfi-1</h3>
-<h3>r7rs/boolean</h3>
-<h3>r7rs/vectors</h3>
-<h3>r7rs/pair-list</h3>
-<h3>r7rs/strings</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (string=? (string-foldcase "foo") (string-foldcase "FOO")))</li>
-<li>(assert (string-ci>=? "b" "B" "a" "A"))</li>
-<li>(assert (string>=? "b" "b" "a" "a"))</li>
-<li>(assert (string-ci&lt;=? "a" "A" "b" "B"))</li>
-<li>(assert (string&lt;=? "a" "a" "b" "b"))</li>
-<li>(assert (string-ci>? "c" "B" "a"))</li>
-<li>(assert (string>? "c" "b" "a"))</li>
-<li>(assert (string-ci&lt;? "a" "B" "c"))</li>
-<li>(assert (string&lt;? "a" "b" "c"))</li>
-<li>(assert (string-ci=? "foo" "FOO" (string #\f #\o #\o)))</li>
-<li>(assert (string=? "foo" "foo" (string #\f #\o #\o)))</li>
-</ul>
-<h3>r7rs/characters</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (char=? (char-foldcase #\a) (char-foldcase #\A)))</li>
-<li>(assert (= 3 (digit-value #\3)))</li>
-<li>(assert (char-ci>=? #\b #\B #\a #\A))</li>
-<li>(assert (char-ci&lt;=? #\a #\A #\b #\B))</li>
-<li>(assert (char-ci>? #\c #\B #\a))</li>
-<li>(assert (char-ci&lt;? #\a #\B #\c))</li>
-<li>(assert (char-ci=? #\a #\A #\a))</li>
-<li>(assert (char>=? #\b #\b #\a #\a))</li>
-<li>(assert (char&lt;=? #\a #\a #\b #\b))</li>
-<li>(assert (char>? #\c #\b #\a))</li>
-<li>(assert (char&lt;? #\a #\b #\c))</li>
-<li>(assert (char=? #\a #\a #\a))</li>
-<li>(list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)</li>
-</ul>
-<h3>r7rs/define</h3>
-<h3>r7rs/equivalence</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))</li>
-<li>(let ((x (make-bytevector 4))) (assert (eqv? x x)))</li>
-</ul>
-<h3>r7rs/control</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(call/cc (lambda (k) k))</li>
-<li>(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))</li>
-<li>(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))</li>
-</ul>
-<h3>r7rs/symbol</h3>
-<h4>|ERROR|</h4>
-<ul>
-<li>(assert (symbol=? 'a 'a (string->symbol "a")))</li>
 </ul>
 </section>
