@@ -42,57 +42,107 @@
               (loop (cons line lines))))))))
 
 (define *data* (make-hash-table))
-(define *schemes* (make-hash-table))
-(define *groups* (make-hash-table))
+(define *schemes* '())
+(define *groups* '())
+(define *tests* (make-hash-table))
+
+(define (symbol-downcase s) (string->symbol (string-downcase (symbol->string s))))
+
+(define-syntax push
+  (syntax-rules ()
+    ((push x lst)
+     (set! lst (cons x lst)))))
 
 (define (parse-data)
   (let ((data (read-data)))
     (for-each (lambda (d)
-                (let* ((scheme (first d))
+                (let* ((impl (first d))
                        (version (second d))
-                       (key (string->symbol (string-append scheme "-" version)))
+                       (scheme (string->symbol (string-append impl "-" version)))
                        (group (string->symbol (third d)))
-                       (type (string->symbol (fourth d)))
-                       (line (fifth d)))
-                  (nested-hash-table/put! *data* (cons line (nested-hash-table/get *data* '() key group type)) key group type)
-                  (nested-hash-table/put! *schemes* (+ 1 (nested-hash-table/get *schemes* 0 key type)) key type)
-                  (nested-hash-table/put! *groups* (+ 1 (nested-hash-table/get *groups* 0 group type)) group type)))
+                       (result (string->symbol (fourth d)))
+                       (name (fifth d))
+                       (comments (sixth d)))
+                  (nested-hash-table/put! *data* (symbol-downcase result) group name comments scheme)
+                  (unless (memq scheme *schemes*)
+                    (push scheme *schemes*))
+                  (unless (memq group *groups*)
+                    (push group *groups*))
+                  (unless (member name (hash-table/get *tests* group '()))
+                    (hash-table/put! *tests* group (cons name (hash-table/get *tests* group '()))))))
               data)))
+
+(define (get-res group test)
+  (hash-table->alist (nested-hash-table/get *data* 'UNKNOWN group test)))
 
 (define (format-stats)
   (with-output-to-file "stats.html"
     (lambda ()
       (set! *data* (make-hash-table))
-      (set! *schemes* (make-hash-table))
-      (set! *groups* (make-hash-table))
+      (set! *schemes* '())
+      (set! *groups* '())
+      (set! *tests* (make-hash-table))
       (parse-data)
-      (format #t "<table><thead><tr><th>Scheme</th><th>Percentage</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
-      (hash-table-walk *schemes*
-                       (lambda (k v)
-                         (let ((ok (hash-table/get v '|OK| 0))
-                               (error (hash-table/get v '|ERROR| 0)))
-                           (format #t "<tr><td>~a</td><td>~a%</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
+      (format #t "<head><link rel=\"stylesheet\" href=\"https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css\" integrity=\"sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE\" crossorigin=\"anonymous\"></head><body>~%")
+      (format #t "<style>
+.group { font-size: 130%; }
+.testname { margin-left: 1em; font-style: italic; }
+i.fa-check { color: #0b0; }
+i.fa-times { color: #b00; }
+i.fa-question { color: #880; }
+table { margin: 0; padding: 0; cell-padding: 0; }
+tbody tr:hover { background-color: #ddd; }
+</style><script>
+document.addEventListener(\"DOMContentLoaded\", function() {
+for(var el of document.getElementsByClassName(\"test\")) {
+el.style.display = \"none\";
+}
+});
+</script>")
+      (format #t "<table><thead><tr>")
+      (for-each (lambda (scheme)
+                  (format #t "<th>~a</th>" scheme))
+                (cons "" (sort *schemes* symbol<?)))
+      (format #t "</tr></thead><tbody>")
+      (for-each (lambda (group)
+                  (format #t "<tr class=\"group\"><td>~a</td></tr>~%" group)
+                  (for-each (lambda (test)
+                              (let ((r (get-res group test)))
+                                (format #t "<tr class=\"test-summary\"><td>~a</td>~%" test)
+                                (for-each (lambda (scheme)
+                                            (let* ((x (map (lambda (res)
+                                                             (if (eq? 'error (hash-table/get (cdr res) scheme 'error)) 0 1))
+                                                           r))
+                                                   (ok (apply + x))
+                                                   (total (length x)))
+                                              (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "question"))))) ;;  (format #f "~a/~a" ok total)
+                                          (sort *schemes* symbol<?))
+                                (format #t "</tr>~%")
+                                (for-each (lambda (res)
+                                            (format #t "<tr class=\"test\"><td><span class=\"testname\">~a</span></td>~%" (if (string-null? (car res)) test (car res)))
+                                            (for-each (lambda (scheme)
+                                                        (let ((x (hash-table/get (cdr res) scheme 'unknown)))
+                                                          (format #t "<td class=\"~a\">~a</td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "1/1" "0/1"))))
+                                                      (sort *schemes* symbol<?))
+                                            (format #t "</tr>"))
+                                          (sort r (lambda (a b) (string<? (car a) (car b)))))))
+                            (sort (hash-table/get *tests* group '()) string<?)))
+                (sort *groups* symbol<?))
       (format #t "</tbody></table>")
-      (format #t "<table><thead><tr><th>Group</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
-      (hash-table-walk *groups*
-                       (lambda (k v)
-                         (let ((ok (hash-table/get v '|OK| 0))
-                               (error (hash-table/get v '|ERROR| 0)))
-                           (format #t "<tr><td>~a</td><td>~a</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
-      (format #t "</tbody></table>")
-      (hash-table-walk *data*
-                       (lambda (k v)
-                         (format #t "<section><h2>~a</h2>~%" k)
-                         (hash-table-walk v
-                                          (lambda (k v)
-                                            (format #t "<h3>~a</h3>~%" k)
-                                            (hash-table-walk v
-                                                             (lambda (k v)
-                                                               (when (eq? '|ERROR| k)
-                                                                 (format #t "<h4>~a</h4>~%" k)
-                                                                 (format #t "<ul>~%")
-                                                                 (for-each (lambda (x)
-                                                                             (format #t "<li>~a</li>~%" (string-replace-string-all x "<" "&lt;")))
-                                                                           v)
-                                                                 (format #t "</ul>~%"))))))
-                         (format #t "</section>~%"))))))
+      ;;      (format #t "<table><thead><tr><th>Scheme</th><th>Percentage</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
+      ;; (hash-table-walk *schemes*
+      ;;                  (lambda (k v)
+      ;;                    (let ((ok (hash-table/get v '|OK| 0))
+      ;;                          (error (hash-table/get v '|ERROR| 0)))
+      ;;                      (format #t "<tr><td>~a</td><td>~a%</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
+      ;; (format #t "</tbody></table>")
+      ;; (format #t "<table><thead><tr><th>Group</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
+      ;; (hash-table-walk *groups*
+      ;;                  (lambda (k v)
+      ;;                    (let ((ok (hash-table/get v '|OK| 0))
+      ;;                          (error (hash-table/get v '|ERROR| 0)))
+      ;;                      (format #t "<tr><td>~a</td><td>~a</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
+      ;; (format #t "</tbody></table>")
+      ;; (format #t "")
+
+      )))

@@ -1,158 +1,171 @@
+;; TEST number?
 (assert (number? 3))
 (assert (not (number? 'a)))
-;; TEST
+;; TEST real?
 (assert (real? 3.14))
-;; TEST
+;; TEST rational?
 (assert (rational? 3/4))
-;; TEST
+;; TEST integer?
 (assert (integer? 123))
-;; TEST
+;; TEST exact?
 (assert (exact? 3))
-;; TEST
+;; TEST inexact?
 (assert (inexact? 3.0))
-;; TEST
+;; TEST exact-integer?
 (assert (exact-integer? 32))
-;; TEST
+;; TEST finite?
 (assert (finite? 123))
-;; TEST
+;; TEST infinite?
 (assert (infinite? +inf.0))
-;; TEST
+;; TEST nan?
 (assert (nan? +nan.0))
-;; TEST
+;; TEST = two parameters
+(assert (= 1 1))
+;; TEST = more than two parameters
 (assert (= 1 1 1 1))
-;; TEST
+;; TEST < two parameters
+(assert (< 1 2))
+;; TEST < more than two parameters
 (assert (< 1 2 3 4))
-;; TEST
+;; TEST > two parameters
+(assert (> 4 3))
+;; TEST > more than two parameters
 (assert (> 4 3 2 1))
-;; TEST
+;; TEST <= two parameters
+(assert (<= 1 1))
+;; TEST <= more than two parameters
 (assert (<= 1 1 2 2))
-;; TEST
+;; TEST >= two parameters
+(assert (>= 2 2))
+;; TEST >= more than two parameters
 (assert (>= 2 2 1 1))
-;; TEST
+;; TEST zero?
 (assert (zero? 0))
-;; TEST
+;; TEST positive?
 (assert (positive? 1))
-;; TEST
+;; TEST negative?
 (assert (negative? -1))
-;; TEST
+;; TEST odd?
 (assert (odd? 3))
-;; TEST
+;; TEST even?
 (assert (even? 2))
-;; TEST
+;; TEST max
 (assert (= 5 (max 1 2 3 4 5)))
-;; TEST
+;; TEST min
 (assert (= 1 (min 1 2 3 4 5)))
-;; TEST
+;; TEST + no parameters
 (assert (= 0 (+)))
-;; TEST
+;; TEST + one parameter
 (assert (= 5 (+ 5)))
-;; TEST
+;; TEST + more than two parameters
 (assert (= 10 (+ 1 2 3 4)))
-;; TEST
+;; TEST * no parameters
 (assert (= 1 (*)))
-;; TEST
+;; TEST * one parameter
 (assert (= 5 (* 5)))
-;; TEST
+;; TEST * more than two parameters
 (assert (= 24 (* 1 2 3 4)))
-;; TEST
+;; TEST / one parameter
 (assert (= 1/5 (/ 5)))
-;; TEST
+;; TEST / more than two parameters
 (assert (= 1/6 (/ 1 2 3)))
-;; TEST
+;; TEST abs
 (assert (= 5 (abs -5)))
-;; TEST
+;; TEST floor-quotient
 (assert (= -4 (floor-quotient 10 -3)))
-;; TEST
+;; TEST floor-remainder
 (assert (= -2 (floor-remainder 10 -3)))
-;; TEST
+;; TEST truncate-quotient
 (assert (= -3 (truncate-quotient 10 -3)))
-;; TEST
+;; TEST truncate-remainder
 (assert (= 1 (truncate-remainder 10 -3)))
-;; TEST
+;; TEST floor/
 (assert (call-with-values (lambda () (floor/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))
 (assert (call-with-values (lambda () (floor/ -5 2)) (lambda (a b) (and (= a -3) (= b 1)))))
 (assert (call-with-values (lambda () (floor/ 5 -2)) (lambda (a b) (and (= a -3) (= b -1)))))
 (assert (call-with-values (lambda () (floor/ -5 -2)) (lambda (a b) (and (= a 2) (= b -1)))))
-;; TEST
+;; TEST truncate/
 (assert (call-with-values (lambda () (truncate/ 5 2)) (lambda (a b) (and (= a 2) (= b 1)))))
 (assert (call-with-values (lambda () (truncate/ -5 2)) (lambda (a b) (and (= a -2) (= b -1)))))
 (assert (call-with-values (lambda () (truncate/ 5 -2)) (lambda (a b) (and (= a -2) (= b 1)))))
 (assert (call-with-values (lambda () (truncate/ -5 -2)) (lambda (a b) (and (= a 2) (= b -1)))))
 (assert (call-with-values (lambda () (truncate/ -5.0 -2)) (lambda (a b) (and (= a 2.0) (= b -1.0)))))
-;; TEST
+;; TEST gcd
 (assert (= 782 (gcd 72726 17986)))
-;; TEST
+;; TEST lcm
 (assert (= 1672698 (lcm 72726 17986)))
-;; TEST
+;; TEST numerator
 (assert (= 5 (numerator 5/17)))
-;; TEST
+;; TEST denominator
 (assert (= 17 (denominator 5/17)))
-;; TEST
+;; TEST floor
 (assert (= 5 (floor 5.3)))
-;; TEST
+;; TEST ceiling
 (assert (= 6 (ceiling 5.3)))
-;; TEST
+;; TEST truncate
 (assert (= -2 (truncate -2.5)))
 (assert (= 2 (truncate 2.5)))
-;; TEST
+;; TEST round
 (assert (= 3 (round 2.7)))
 (assert (= -3 (round -2.7)))
-;; TEST
+;; TEST rationalize
 (assert (= 1/3 (rationalize (exact .3) 1/10)))
 (assert (= #i1/3 (rationalize .3 1/10)))
-;; TEST
+;; TEST exp
 (assert (and (> (exp 3) 20.085) (< (exp 3) 20.086)))
-;; TEST
+;; TEST log one parameter
 (assert (and (> (log 15) 2.70) (< (log 15) 2.71)))
-;; TEST
+;; TEST log two parameters
 (assert (and (> (log 10 4) 1.660) (< (log 10 4) 1.661)))
-;; TEST
+;; TEST sin
 (assert (and (> (sin 3) 0.141) (< (sin 3) 0.142)))
-;; TEST
+;; TEST cos
 (assert (and (> (cos 5) 0.283) (< (cos 3) 0.284)))
-;; TEST
+;; TEST tan
 (assert (and (> (tan 1) 1.557) (< (tan 1) 1.558)))
-;; TEST
+;; TEST asin
 (assert (and (> (asin 0.5) 0.523) (< (asin 0.5) 0.524)))
-;; TEST
+;; TEST acos
 (assert (and (> (acos 0.5) 1.047) (< (acos 0.5) 1.048)))
-;; TEST
+;; TEST atan one parameter
 (assert (and (> (atan 0.5) 0.463) (< (atan 0.5) 0.464)))
-;; TEST
+;; TEST atan two parameters
 (assert (and (> (atan 2 1) 1.107) (< (atan 2 1) 1.108)))
-;; TEST
+;; TEST square
 (assert (= 25 (square 5)))
-;; TEST
+;; TEST sqrt
 (assert (and (> (sqrt 17) 4.123) (< (sqrt 17) 4.124)))
-;; TEST
+;; TEST exact-integer-sqrt
 (assert (call-with-values (lambda () (exact-integer-sqrt 17)) (lambda (a b) (and (= a 4) (= b 1)))))
-;; TEST
+;; TEST expt
 (assert (= 8 (expt 2 3)))
-;; TEST
+;; TEST expt 0^0
 (assert (= 1 (expt 0 0)))
-;; TEST
+;; TEST expt 0^1
 (assert (= 0 (expt 0 1)))
-;; TEST
+;; TEST make-rectangular
 (assert (= 1+2i (make-rectangular 1 2)))
-;; TEST
+;; TEST real-part
 (assert (= 1 (real-part (make-rectangular 1 2))))
-;; TEST
+;; TEST imag-part
 (assert (= 2 (imag-part (make-rectangular 1 2))))
-;; TEST
+;; TEST make-polar
 (assert (= 3 (magnitude (make-polar 3 1))))
-;; TEST
+;; TEST magnitude
+(assert (= 3 (magnitude (make-polar 3 1))))
+;; TEST angle
 (assert (< (abs (- (angle (make-polar 3 1)) 1)) 0.000001))
-;; TEST
+;; TEST inexact
 (assert (inexact? (inexact 3)))
-;; TEST
+;; TEST exact
 (assert (exact? (exact 3.0)))
-;; TEST
+;; TEST number->string
 (assert (string=? "123" (number->string 123)))
 (assert (string=? "1111011" (number->string 123 2)))
 (assert (string=? "173" (number->string 123 8)))
 (assert (string=? "7b" (number->string 123 16)))
 (assert (string=? "123" (number->string 123 10)))
-;; TEST
+;; TEST string->number
 (assert (= 123 (string->number "123")))
 (assert (= 123 (string->number "7b" 16)))
 (assert (= 123 (string->number "173" 8)))

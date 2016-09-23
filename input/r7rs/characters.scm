@@ -1,46 +1,47 @@
+;; TEST literals
 (list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab)
-;; TEST
+;; TEST char?
 (assert (char? #\a))
 (assert (not (char? 3)))
-;; TEST
+;; TEST char=?
 (assert (char=? #\a #\a #\a))
-;; TEST
+;; TEST char<?
 (assert (char<? #\a #\b #\c))
-;; TEST
+;; TEST char>?
 (assert (char>? #\c #\b #\a))
-;; TEST
+;; TEST char<=?
 (assert (char<=? #\a #\a #\b #\b))
-;; TEST
+;; TEST char>=?
 (assert (char>=? #\b #\b #\a #\a))
-;; TEST
+;; TEST char-ci=?
 (assert (char-ci=? #\a #\A #\a))
-;; TEST
+;; TEST char-ci<?
 (assert (char-ci<? #\a #\B #\c))
-;; TEST
+;; TEST char-ci>?
 (assert (char-ci>? #\c #\B #\a))
-;; TEST
+;; TEST char-ci<=?
 (assert (char-ci<=? #\a #\A #\b #\B))
-;; TEST
+;; TEST char-ci>=?
 (assert (char-ci>=? #\b #\B #\a #\A))
-;; TEST
+;; TEST char-alphabetic?
 (assert (char-alphabetic? #\a))
-;; TEST
+;; TEST char-numeric?
 (assert (char-numeric? #\1))
-;; TEST
+;; TEST char-whitespace?
 (assert (char-whitespace? #\space))
-;; TEST
+;; TEST char-upper-case?
 (assert (char-upper-case? #\A))
-;; TEST
+;; TEST char-lower-case?
 (assert (char-lower-case? #\a))
-;; TEST
+;; TEST digit-value
 (assert (= 3 (digit-value #\3)))
-;; TEST
+;; TEST char->integer
 (assert (= 97 (char->integer #\a)))
-;; TEST
+;; TEST integer->char
 (assert (char=? #\a (integer->char 97)))
-;; TEST
+;; TEST char-upcase
 (assert (char=? #\A (char-upcase #\a)))
-;; TEST
+;; TEST char-downcase
 (assert (char=? #\a (char-downcase #\A)))
-;; TEST
+;; TEST char-foldcase
 (assert (char=? (char-foldcase #\a) (char-foldcase #\A)))

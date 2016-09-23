@@ -1,55 +1,56 @@
+;; TEST eqv? true
 (assert (eqv? #t #t))
-;; TEST
+;; TEST eqv? false
 (assert (eqv? #f #f))
-;; TEST
+;; TEST eqv? symbol
 (assert (eqv? 'a 'a))
-;; TEST
+;; TEST eqv? integer
 (assert (eqv? 3 3))
-;; TEST
+;; TEST eqv? real
 (assert (eqv? 3.0 3.0))
-;; TEST
+;; TEST eqv? char
 (assert (eqv? #\a #\a))
-;; TEST
+;; TEST eqv? null
 (assert (eqv? '() '()))
-;; TEST
+;; TEST eqv? pair
 (let ((x (cons 1 2))) (assert (eqv? x x)))
-;; TEST
+;; TEST eqv? vector
 (let ((x (make-vector 5))) (assert (eqv? x x)))
-;; TEST
+;; TEST eqv? string
 (let ((x (make-string 4))) (assert (eqv? x x)))
-;; TEST
+;; TEST eqv? bytevector
 (let ((x (make-bytevector 4))) (assert (eqv? x x)))
-;; TEST
+;; TEST eqv? function
 (assert (eqv? + +))
-;; TEST
+;; TEST eqv? different booleans
 (assert (not (eqv? #t #f)))
-;; TEST
+;; TEST eqv? different symbols
 (assert (not (eqv? 'a 'b)))
-;; TEST
+;; TEST eqv? integer and real
 (assert (not (eqv? 3 3.0)))
-;; TEST
+;; TEST eqv? different integers
 (assert (not (eqv? 3 4)))
-;; TEST
+;; TEST eqv? different chars
 (assert (not (eqv? #\a #\b)))
-;; TEST
+;; TEST eqv? different list literals
 (assert (not (eqv? '() '(1))))
-;; TEST
+;; TEST eqv? different lists
 (let ((a (make-list 3)) (b (make-list 3))) (assert (not (eqv? a b))))
-;; TEST
+;; TEST eqv? different vectors
 (let ((a (make-vector 3)) (b (make-vector 3))) (assert (not (eqv? a b))))
-;; TEST
+;; TEST eqv? different strings
 (let ((a (make-string 3)) (b (make-string 3))) (assert (not (eqv? a b))))
-;; TEST
+;; TEST eqv? different bytevectors
 (let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))
-;; TEST
+;; TEST eq? symbols
 (assert (eq? 'a 'a))
-;; TEST
+;; TEST eq? different lists
 (assert (not (eq? (list 'a) (list 'a))))
-;; TEST
+;; TEST eq? null
 (assert (eq? '() '()))
-;; TEST
+;; TEST eq? function
 (assert (eq? car car))
-;; TEST
+;; TEST eq? vector
 (let ((x (make-vector 3))) (eq? x x))
-;; TEST
+;; TEST eq? same function
 (let ((x (lambda (x) (+ x 1)))) (eq? x x))

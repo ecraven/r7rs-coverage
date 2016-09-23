@@ -1,7 +1,8 @@
+;; TEST symbol?
 (assert (symbol? 'a))
-;; TEST
+;; TEST symbol=?
 (assert (symbol=? 'a 'a (string->symbol "a")))
-;; TEST
+;; TEST symbol->string
 (assert (string=? "a" (symbol->string 'a)))
-;; TEST
+;; TEST string->symbol
 (assert (eq? 'a (string->symbol "a")))

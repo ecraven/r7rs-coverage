@@ -22,25 +22,25 @@ case "$1" in
              SCHEME_VERSION=$(larceny --version | cut -f 2 -d\  )
              ;;
     mosh) SCHEME_EXE=mosh_exec
-             SCHEME_NAME=mosh
-             SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
-             ;;
+          SCHEME_NAME=mosh
+          SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
+          ;;
     picrin) SCHEME_EXE=picrin_exec
-          SCHEME_NAME=picrin
-          SCHEME_VERSION="unknown"
-          ;;
+            SCHEME_NAME=picrin
+            SCHEME_VERSION="unknown"
+            ;;
     gambitc) SCHEME_EXE=gambitc_exec
-          SCHEME_NAME=gambitc
-          SCHEME_VERSION="unknown"
-          ;;
+             SCHEME_NAME=gambitc
+             SCHEME_VERSION="unknown"
+             ;;
     gauche) SCHEME_EXE=gauche_exec
-          SCHEME_NAME=gauche
-          SCHEME_VERSION=$(gosh -V | cut -f 5 -d\  )
-          ;;
+            SCHEME_NAME=gauche
+            SCHEME_VERSION=$(gosh -V | cut -f 5 -d\  )
+            ;;
     racket) SCHEME_EXE=racket_exec
-          SCHEME_NAME=racket
-          SCHEME_VERSION=$(racket --version | cut -f 4 -d\ | sed 's/\.$//')
-          ;;
+            SCHEME_NAME=racket
+            SCHEME_VERSION=$(racket --version | cut -f 4 -d\ | sed 's/\.$//')
+            ;;
 
     *) echo "Unknown Scheme"
        exit -1
@@ -121,36 +121,39 @@ do
     for i in $dir/*.scm
     do
         #echo running file $i
-        csplit --suppress-matched --quiet -f ${temp_dir}/cov -b '%02d.scm' $i '/;; TEST/' '{*}'
+        csplit --quiet -f ${temp_dir}/cov -b '%02d.scm' $i '/;; TEST/' '{*}'
         for file in ${temp_dir}/*
         do
-            {
-                tmpfile=$(mktemp)
-                d=$(echo $dir | sed 's|input/||')
-                TEST_GROUP=$(echo $i | sed -e 's|input/||' -e 's/.scm//')
-                if [ -r preludes/$d/$SCHEME_NAME.scm ]
-                then
-                    cat preludes/$d/$SCHEME_NAME.scm > $tmpfile
-                fi
-                if [ -r preludes/$SCHEME_NAME.scm ]
-                then
-                    cat preludes/$SCHEME_NAME.scm >> $tmpfile
-                fi
-                cat $file >> $tmpfile
-                $SCHEME_EXE $tmpfile
-                rm $tmpfile
-            } >> $SCHEME_NAME.log 2>&1
-            if [ $status == 0 ]; then
-                # don't do anything
+            if [ -s $file ]
+            then
                 {
-                    echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,OK,"
-                    cat $file
-                } | grep ',OK,' | tee -a errors.csv
-            else
-                {
-                    echo -n "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,"
-                    cat $file
-                } | grep ERROR | tee -a errors.csv
+                    tmpfile=$(mktemp)
+                    test=$(grep ';; TEST' $file | cut -f 3 -d\  )
+                    params=$(grep ';; TEST' $file | cut -f 4- -d\  )
+                    d=$(echo $dir | sed 's|input/||')
+                    TEST_GROUP=$(echo $i | sed -e 's|input/||' -e 's/.scm//')
+                    if [ -r preludes/$d/$SCHEME_NAME.scm ]
+                    then
+                        cat preludes/$d/$SCHEME_NAME.scm > $tmpfile
+                    fi
+                    if [ -r preludes/$SCHEME_NAME.scm ]
+                    then
+                        cat preludes/$SCHEME_NAME.scm >> $tmpfile
+                    fi
+                    cat $file >> $tmpfile
+                    $SCHEME_EXE $tmpfile
+                    rm $tmpfile
+                } >> $SCHEME_NAME.log 2>&1
+                if [ $status == 0 ]; then
+                    # don't do anything
+                    {
+                        echo "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,OK,$test,$params"
+                    } | tee -a errors.csv
+                else
+                    {
+                        echo "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,$test,$params"
+                    } | tee -a errors.csv
+                fi
             fi
         done
         rm $temp_dir/*.scm
