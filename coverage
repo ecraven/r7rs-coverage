@@ -1,5 +1,7 @@
 #!/bin/bash
 
+GUILE=${GUILE:-guile}
+
 case "$1" in
     mit) SCHEME_EXE=mit_scheme_exec
          SCHEME_NAME=mit
@@ -7,7 +9,7 @@ case "$1" in
          ;;
     guile) SCHEME_EXE=guile_exec
            SCHEME_NAME=guile
-           SCHEME_VERSION=$(guile --version | head -n 1 | cut -f 4 -d\   )
+           SCHEME_VERSION=$(${GUILE} --version | head -n 1 | cut -f 4 -d\   )
            ;;
     chibi) SCHEME_EXE=chibi_exec
            SCHEME_NAME=chibi
@@ -41,6 +43,10 @@ case "$1" in
             SCHEME_NAME=racket
             SCHEME_VERSION=$(racket --version | cut -f 4 -d\ | sed 's/\.$//')
             ;;
+    cyclone) SCHEME_EXE=cyclone_exec
+            SCHEME_NAME=cyclone
+            SCHEME_VERSION=$(cyclone -v | grep Version | sed 's/.*Version \([^ ][^ ]*\).*/\1/')
+            ;;
 
     *) echo "Unknown Scheme"
        exit -1
@@ -50,6 +56,11 @@ esac
 
 racket_exec() {
     racket $1
+    status=$?
+}
+
+cyclone_exec() {
+    cyclone $1
     status=$?
 }
 
@@ -101,7 +112,7 @@ mit_scheme_exec() {
 }
 
 guile_exec() {
-    guile $1 > /tmp/guile.log 2>&1
+    ${GUILE} $1 > /tmp/guile.log 2>&1
     status=$?
 }
 

@@ -1,4 +1,4 @@
-all: mit chicken guile chibi larceny mosh picrin gambitc gauche racket
+all: mit chicken guile chibi larceny mosh picrin gambitc gauche racket cyclone
 
 clean:
 	rm -f *.log errors.csv
@@ -23,3 +23,5 @@ gauche:
 	./coverage gauche
 racket:
 	./coverage racket
+cyclone:
+	./coverage cyclone
