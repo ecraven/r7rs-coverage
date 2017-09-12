@@ -1,2 +1,0 @@
-(require 'srfi-1)
-

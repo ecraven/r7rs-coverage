@@ -1,0 +1,2 @@
+;; TEST load
+(list load)

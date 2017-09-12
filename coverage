@@ -49,9 +49,9 @@ case "$1" in
             SCHEME_VERSION=$(racket --version | cut -f 4 -d\ | sed 's/\.$//')
             ;;
     cyclone) SCHEME_EXE=cyclone_exec
-            SCHEME_NAME=cyclone
-            SCHEME_VERSION=$(cyclone -v | grep Version | sed 's/.*Version \([^ ][^ ]*\).*/\1/')
-            ;;
+             SCHEME_NAME=cyclone
+             SCHEME_VERSION=$(cyclone -v | grep Version | sed 's/.*Version \([^ ][^ ]*\).*/\1/')
+             ;;
 
     *) echo "Unknown Scheme"
        exit -1
@@ -102,7 +102,7 @@ larceny_exec() {
 }
 
 kawa_exec() {
-    timeout ${CPU_LIMIT} kawa $1 < /dev/null > /tmp/kawa.log 2>&1
+    timeout ${CPU_LIMIT} kawa $1 < /dev/null 2>&1
     status=$?
 }
 
@@ -122,7 +122,7 @@ mit_scheme_exec() {
 }
 
 guile_exec() {
-    ${GUILE} $1 > /tmp/guile.log 2>&1
+    ${GUILE} $1
     status=$?
 }
 
@@ -136,51 +136,56 @@ chibi_exec() {
     fi
 }
 temp_dir=$(mktemp -d)
-for dir in input/*
+
+for pkg in input/*.scm
 do
-    #echo running group $dir
-    for i in $dir/*.scm
+    echo "***** running package $pkg"
+    csplit --quiet -f ${temp_dir}/cov -b '%03d.scm' $pkg '/;; TEST/' '{*}'
+    p=$(basename $pkg .scm)
+    package="("${p%%-*}" "${p#*-}")"
+    echo "(import $package)"
+    for file in ${temp_dir}/cov*.scm
     do
-        #echo running file $i
-        csplit --quiet -f ${temp_dir}/cov -b '%02d.scm' $i '/;; TEST/' '{*}'
-        for file in ${temp_dir}/*
-        do
-            if [ -s $file ]
-            then
-                {
-                    tmpfile=$(mktemp)
-                    test=$(grep ';; TEST' $file | cut -f 3 -d\  )
-                    params=$(grep ';; TEST' $file | cut -f 4- -d\  )
-                    d=$(echo $dir | sed 's|input/||')
-                    TEST_GROUP=$(echo $i | sed -e 's|input/||' -e 's/.scm//')
-                    if [ -r preludes/$d/$SCHEME_NAME.scm ]
-                    then
-                        cat preludes/$d/$SCHEME_NAME.scm > $tmpfile
-                    fi
-                    if [ -r preludes/$SCHEME_NAME.scm ]
-                    then
-                        cat preludes/$SCHEME_NAME.scm >> $tmpfile
-                    fi
-                    cat $file >> $tmpfile
-                    $SCHEME_EXE $tmpfile
-                    rm $tmpfile
-                } >> $SCHEME_NAME.log 2>&1
-                if [ $status == 0 ]; then
-                    # don't do anything
-                    {
-                        echo "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,OK,$test,$params"
-                    } | tee -a errors.csv
-                else
-                    {
-                        echo "$SCHEME_NAME,$SCHEME_VERSION,$TEST_GROUP,ERROR,$test,$params"
-                    } | tee -a errors.csv
+        if [ -s $file ]
+        then
+            {
+                tmpfile=$(mktemp)
+                test=$(grep ';; TEST' $file | cut -f 3 -d\  )
+                params=$(grep ';; TEST' $file | cut -f 4- -d\  )
+                echo $test / $params
+                if [ -r preludes/$SCHEME_NAME.scm ]
+                then
+                    cat preludes/$SCHEME_NAME.scm >> $tmpfile
                 fi
+                if [ $package == "(scheme base)" ] ;
+                then
+                    :
+                else
+                    $package="(scheme base) $package"
+                fi
+                echo "(import $package)" >> $tmpfile
+                echo "(define (assert x) (unless x (error \"ERROR assertion failed\")))" >> $tmpfile
+                if [ -r postludes/$SCHEME_NAME.scm ]
+                then
+                    cat postludes/$SCHEME_NAME.scm >> $tmpfile
+                fi
+                cat $file >> $tmpfile
+                $SCHEME_EXE $tmpfile
+                rm $tmpfile
+            } >> $SCHEME_NAME.log 2>&1
+            if [ $status == 0 ]; then
+                state=OK
+            else
+                state=ERROR
             fi
-        done
-        rm $temp_dir/*.scm
+            echo "$SCHEME_NAME,$SCHEME_VERSION,$package,$state,$test,$params" | tee -a errors.csv
+        fi
     done
+    rm $temp_dir/*.scm
 done
-rm -Rf $temp_dir
+
+#rm -Rf $temp_dir
+
 # Local Variables:
 # mode: sh
 # End:
