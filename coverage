@@ -24,6 +24,10 @@ case "$1" in
              SCHEME_NAME=larceny
              SCHEME_VERSION=$(larceny --version | cut -f 2 -d\  )
              ;;
+    kawa) SCHEME_EXE=kawa_exec
+          SCHEME_NAME=kawa
+          SCHEME_VERSION=$(kawa  --version | head -n 1 | cut -d\  -f 2)
+          ;;
     mosh) SCHEME_EXE=mosh_exec
           SCHEME_NAME=mosh
           SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
@@ -95,6 +99,11 @@ larceny_exec() {
     else
         status=0
     fi
+}
+
+kawa_exec() {
+    timeout ${CPU_LIMIT} kawa $1 < /dev/null > /tmp/kawa.log 2>&1
+    status=$?
 }
 
 csi_exec() {

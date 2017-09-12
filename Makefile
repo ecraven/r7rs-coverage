@@ -19,6 +19,9 @@ chibi.log:
 larceny: larceny.log
 larceny.log:
 	./coverage larceny
+kawa: kawa.log
+kawa.log:
+	./coverage kawa
 mosh: mosh.log
 mosh.log:
 	./coverage mosh

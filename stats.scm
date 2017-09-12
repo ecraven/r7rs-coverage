@@ -94,15 +94,19 @@
       (parse-data)
       (format #t "<head><link rel=\"stylesheet\" href=\"https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css\" integrity=\"sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE\" crossorigin=\"anonymous\"></head><body>~%")
       (format #t "<style>
+body { max-width: 1800px; }
 .group { font-size: 130%; }
 .testname { font-style: italic; }
 .offset { margin-left: 1em; }
 .selected { background-color: #060; }
 i.fa-check { color: #0b0; min-width: 1em; }
 i.fa-times { color: #b00; min-width: 1em; }
-i.fa-question { color: #880; min-width: 1em; }
+i.fa-adjust { color: #880; min-width: 1em; }
 .details { color: #888; font-size: 70%; }
-table { margin: 0; padding: 0; cell-padding: 0; }
+table { margin: 0; padding: 0; cell-padding: 0; width: 100%; }
+th { position: sticky; top: 0; background-color: white; }
+td { text-align: center; }
+tr td:first-child { text-align: right; }
 tbody tr:hover { background-color: #ddd; }
 </style>
 
@@ -136,7 +140,12 @@ document.addEventListener(\"DOMContentLoaded\", function() {
 </script>")
       (format #t "<table><thead><tr>")
       (for-each (lambda (scheme)
-                  (format #t "<th>~a</th>" scheme))
+                  (if (symbol? scheme)
+                      (let* ((parts (burst-string (symbol->string scheme) #\- #f))
+                             (name (car parts))
+                             (version (cadr parts)))
+                        (format #t "<th>~a<br/><small>~a</small></th>" name version))
+                      (format #t "<th>~a</th>" scheme)))
                 (cons "" (sort *schemes* symbol<?)))
       (format #t "</tr></thead><tbody>")
       (for-each (lambda (group)
@@ -156,7 +165,7 @@ document.addEventListener(\"DOMContentLoaded\", function() {
                                                            r))
                                                    (ok (apply + x))
                                                    (total (length x)))
-                                              (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/> <span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "question")) (format #f "~a/~a" ok total)))) ;;  
+                                              (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/> <span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "adjust")) (format #f "~a/~a" ok total)))) ;;  
                                           (sort *schemes* symbol<?))
                                 (format #t "</tr>~%")
                                 (for-each (lambda (res)
