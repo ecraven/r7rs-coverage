@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GUILE=${GUILE:-guile}
-CPU_LIMIT=${CPU_LIMIT:-"5"}
+CPU_LIMIT=${CPU_LIMIT:-"2"}
 
 case "$1" in
     mit) SCHEME_EXE=mit_scheme_exec
@@ -158,7 +158,7 @@ do
                 tmpfile=$(mktemp)
                 test=$(grep ';; TEST' $file | cut -f 3 -d\  )
                 params=$(grep ';; TEST' $file | cut -f 4- -d\  )
-                echo $test / $params
+                echo $pkg $test $params
                 if [ -r preludes/$SCHEME_NAME.scm ]
                 then
                     cat preludes/$SCHEME_NAME.scm >> $tmpfile
