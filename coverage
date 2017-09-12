@@ -1,6 +1,7 @@
 #!/bin/bash
 
 GUILE=${GUILE:-guile}
+CPU_LIMIT=${CPU_LIMIT:-"5"}
 
 case "$1" in
     mit) SCHEME_EXE=mit_scheme_exec
@@ -33,7 +34,7 @@ case "$1" in
             ;;
     gambitc) SCHEME_EXE=gambitc_exec
              SCHEME_NAME=gambitc
-             SCHEME_VERSION="unknown"
+             SCHEME_VERSION=$(gsi -e '(display (system-version-string))')
              ;;
     gauche) SCHEME_EXE=gauche_exec
             SCHEME_NAME=gauche
@@ -87,7 +88,7 @@ mosh_exec() {
 }
 
 larceny_exec() {
-    larceny -r7rs -program $1 < /dev/null > /tmp/larceny.log 2>&1
+    timeout ${CPU_LIMIT} larceny -r7rs -program $1 < /dev/null > /tmp/larceny.log 2>&1
     if grep 'Error: ' /tmp/larceny.log
     then
         status=1
