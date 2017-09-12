@@ -149,7 +149,7 @@ document.addEventListener(\"DOMContentLoaded\", function() {
                 (cons "" (sort *schemes* symbol<?)))
       (format #t "</tr></thead><tbody>")
       (for-each (lambda (group)
-                  (format #t "<tr class=\"group\"><td>~a</td>~%" group)
+                  (format #t "<tr class=\"group\"><td>~a</td>~%" (symbol->string group))
                   ;; (for-each (lambda (scheme)
                   ;;             (let ((res (nested-hash-table/get *group-results* 0 group scheme)))
                   ;;               (format #t "<td>~a/~a</td>~%" res (length (hash-table/get *tests* group '() )))))

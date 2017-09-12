@@ -414,8 +414,9 @@
 ;; TEST pair?
 (assert (pair? '(1 . 2)))
 (assert (not (pair? 'b)))
-;; TEST parameterize
+;; TEST parameterize simple
 (define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (assert (= (p) 5)))
+;; TEST parameterize nested
 (define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (parameterize ((p 7)) (assert (= (p) 7))))
 ;; peek-char is missing
 ;; peek-u8 is missing

@@ -145,11 +145,11 @@ do
     package="("${p%%-*}" "${p#*-}")"
     if [ "$package" = "(scheme base)" ] ;
     then
-        :
+        pkg=$package
     else
-        package="(scheme base) $package"
+        pkg="(scheme base) $package"
     fi
-    echo "(import $package)"
+    echo "(import $pkg)"
     for file in ${temp_dir}/cov*.scm
     do
         if [ -s $file ]
@@ -163,7 +163,7 @@ do
                 then
                     cat preludes/$SCHEME_NAME.scm >> $tmpfile
                 fi
-                echo "(import $package)" >> $tmpfile
+                echo "(import $pkg)" >> $tmpfile
                 echo "(define (assert x) (unless x (error \"ERROR assertion failed\")))" >> $tmpfile
                 if [ -r postludes/$SCHEME_NAME.scm ]
                 then
