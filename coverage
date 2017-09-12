@@ -143,6 +143,12 @@ do
     csplit --quiet -f ${temp_dir}/cov -b '%03d.scm' $pkg '/;; TEST/' '{*}'
     p=$(basename $pkg .scm)
     package="("${p%%-*}" "${p#*-}")"
+    if [ "$package" = "(scheme base)" ] ;
+    then
+        :
+    else
+        package="(scheme base) $package"
+    fi
     echo "(import $package)"
     for file in ${temp_dir}/cov*.scm
     do
@@ -156,12 +162,6 @@ do
                 if [ -r preludes/$SCHEME_NAME.scm ]
                 then
                     cat preludes/$SCHEME_NAME.scm >> $tmpfile
-                fi
-                if [ $package == "(scheme base)" ] ;
-                then
-                    :
-                else
-                    $package="(scheme base) $package"
                 fi
                 echo "(import $package)" >> $tmpfile
                 echo "(define (assert x) (unless x (error \"ERROR assertion failed\")))" >> $tmpfile

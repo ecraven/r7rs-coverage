@@ -2,7 +2,7 @@
 
 all: errors.csv
 
-errors.csv: mit chicken guile chibi larceny mosh picrin gambitc gauche racket cyclone
+errors.csv: mit chicken guile chibi larceny picrin gambitc gauche racket cyclone
 
 mit: mit.log
 mit.log:
@@ -22,9 +22,6 @@ larceny.log:
 kawa: kawa.log
 kawa.log:
 	./coverage kawa
-mosh: mosh.log
-mosh.log:
-	./coverage mosh
 picrin: picrin.log
 picrin.log:
 	./coverage picrin
