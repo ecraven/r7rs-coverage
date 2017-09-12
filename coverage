@@ -31,7 +31,7 @@ case "$1" in
           ;;
     gambitc) SCHEME_EXE=gambitc_exec
           SCHEME_NAME=gambitc
-          SCHEME_VERSION="unknown"
+          SCHEME_VERSION=$(gsi -e '(display (system-version-string))')
           ;;
     gauche) SCHEME_EXE=gauche_exec
           SCHEME_NAME=gauche

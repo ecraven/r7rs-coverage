@@ -60,7 +60,7 @@
               data)))
 
 (define (format-stats)
-  (with-output-to-file "stats.html"
+  (with-output-to-file "index.html"
     (lambda ()
       (set! *data* (make-hash-table))
       (set! *schemes* (make-hash-table))

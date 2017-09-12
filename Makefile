@@ -23,3 +23,6 @@ gauche:
 	./coverage gauche
 racket:
 	./coverage racket
+
+html: errors.csv
+	mit-scheme --load stats.scm --eval '(begin (format-stats) (%exit 0))'
