@@ -2,8 +2,6 @@
 
 all: errors.csv
 
-errors.csv: gerbil mit chicken guile chibi larceny gauche racket cyclone
-
 mit: mit.log Makefile
 mit.log:
 	./coverage mit
@@ -45,4 +43,3 @@ index.html: errors.csv stats.scm
 
 clean:
 	rm -f *.log errors.csv
-
