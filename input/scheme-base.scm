@@ -14,7 +14,7 @@
 (assert (= -5 (- 5)))
 ;; TEST - more than two parameters
 (assert (= -3 (- 1 2 2)))
-;; ... is missing here..
+;; ... is missing here
 ;; TEST / one parameter
 (assert (= 1/5 (/ 5)))
 ;; TEST / more than two parameters
@@ -130,7 +130,8 @@
 (assert (= 6 (ceiling 5.3)))
 ;; TEST char->integer
 (assert (= 97 (char->integer #\a)))
-;; char-ready? is missing
+;; TEST char-ready?
+(let ((x (open-input-string "foobar"))) (assert (char-ready? x)))
 ;; TEST char<=?
 (assert (char<=? #\a #\a #\b #\b))
 ;; TEST char<?
@@ -144,20 +145,34 @@
 ;; TEST char?
 (assert (char? #\a))
 (assert (not (char? 3)))
-;; close-input-port is missing
-;; close-output-port is missing
-;; close-port is missing
-;; complex? is missing
+;; TEST close-input-port
+(let ((p (open-input-string "foobar"))) (assert (input-port-open? p)) (close-input-port p) (assert (not (input-port-open? p))))
+;; TEST close-output-port
+(let ((p (open-output-string))) (assert (output-port-open? p)) (close-output-port p) (assert (not (output-port-open? p))))
+;; TEST close-port
+(let ((p (open-output-string))) (assert (output-port-open? p)) (close-port p) (assert (not (output-port-open? p))))
+;; TEST complex?
+(assert (not (complex? 'a))) (assert (complex? 3))
+(assert (complex? 3+1i))
 ;; TEST cond else
 (assert (= 1 (cond ((= 0 1) 0) (else 1))))
 ;; TEST cond =>
 (assert (= 2 (cond ((assq 'b '((a 1) (b 2))) => cadr) (else #f))))
-;; cond-expand is missing
+;; TEST cond-expand
+(cond-expand (else (assert #t)))
+(cond-expand (r7rs (assert #t)))
+(cond-expand ((library (scheme base)) (assert #t)))
+(cond-expand ((or (library (scheme base))) (assert #t)) (else (assert #f)))
+(cond-expand ((and (library (scheme base))) (assert #t)) (else (assert #f)))
+(cond-expand ((not (library (lets-hope-no-one-defines-a-library-like-this))) (assert #t)) (else (assert #f)))
 ;; TEST cons
 (assert (equal? '(1 . 2) (cons 1 2)))
-;; current-error-port is missing
-;; current-input-port is missing
-;; current-output-port is missing
+;; TEST current-error-port
+(assert (current-error-port))
+;; TEST current-input-port
+(assert (current-input-port))
+;; TEST current-output-port
+(assert (current-output-port))
 ;; TEST define value
 (define x 3) (assert (= 3 x))
 ;; TEST define function, 1 parameter
@@ -168,17 +183,24 @@
 (define (f a b . c) c) (assert (equal? '(3 4 5) (f 1 2 3 4 5)))
 ;; TEST define function, only rest parameter
 (define (f . c) c) (assert (equal? '(1 2 3) (f 1 2 3)))
-;; define-record-type is missing
-;; define-syntax is missing
-;; define-values is missing
+;; TEST define-record-type
+(define-record-type <pare> (kons x y) pare? (x kar set-kar!) (y kdr))
+(define p (kons 1 2)) (assert p) (assert (pare? p)) (assert (= 1 (kar p))) (assert (= 2 (kdr p))) (set-kar! p 3) (assert (= 3 (kar p)))
+;; TEST define-syntax
+(define-syntax push! (syntax-rules () ((push! el lst) (set! lst (cons el lst))))) (define l '(1 2 3)) (push! 'a l) (assert (eq? (car l) 'a))
+;; TEST define-values
+(define-values (x y) (values 1 2)) (assert (= x 1)) (assert (= y 2))
 ;; TEST denominator
 (assert (= 17 (denominator 5/17)))
 ;; TEST do
 (assert (= 25 (let ((x '(1 3 5 7 9))) (do ((x x (cdr x)) (sum 0 (+ sum (car x)))) ((null? x) sum)))))
-;; dynamic-wind is missing
-;; else is missing
-;; eof-object is missing
-;; eof-object? is missing
+;; TEST dynamic-wind
+(let ((o (open-output-string))) (assert (= 2 (dynamic-wind (lambda () (display "1" o)) (lambda () 2) (lambda () (display "3" o))))) (assert (string=? (get-output-string o) "13")))
+;; else is missing here
+;; TEST eof-object
+(assert (eof-object)) (assert (eof-object? (eof-object)))
+;; TEST eof-object?
+(assert (eof-object? (read (open-input-string ""))))
 ;; TEST eq? symbols
 (assert (eq? 'a 'a))
 ;; TEST eq? different lists
@@ -191,7 +213,17 @@
 (let ((x (make-vector 3))) (assert (eq? x x)))
 ;; TEST eq? same function
 (let ((x (lambda (x) (+ x 1)))) (assert (eq? x x)))
-;; equal? is missing
+;; TEST equal? symbols
+(assert (equal? 'a 'a))
+;; TEST equal? lists
+(assert (equal? '(a) '(a)))
+(assert (equal? '(a b c) '(a b c)))
+;; TEST equals? strings
+(assert (equal? "abc" "abc"))
+;; TEST equals? vectors
+(assert (equal? (make-vector 5 'a) (make-vector 5 'a)))
+;; TEST equals? cyclic list
+(assert (equal? '#1=(a b . #1#) '#2= (a b a b . #2#)))
 ;; TEST eqv? true
 (assert (eqv? #t #t))
 ;; TEST eqv? false
@@ -236,10 +268,14 @@
 (let ((a (make-string 3)) (b (make-string 3))) (assert (not (eqv? a b))))
 ;; TEST eqv? different bytevectors
 (let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))
-;; error is missing
-;; error-object-irritants is missing
-;; error-object-message is missing
-;; error-object? is missing
+;; TEST error
+(assert (error-object? (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo")))))))
+;; TEST error-object-irritants
+(assert (equal? (list "bar" "baaz") (error-object-irritants (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo" "bar" "baaz"))))))))
+;; TEST error-object-message
+(assert (string=? "foo" (error-object-message (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo" "bar" "baaz"))))))))
+;; TEST error-object?
+(assert (error-object? (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo")))))))
 ;; TEST even?
 (assert (even? 2))
 ;; TEST exact
@@ -256,8 +292,10 @@
 (assert (= 1 (expt 0 0)))
 ;; TEST expt 0^1
 (assert (= 0 (expt 0 1)))
-;; features is missing
-;; file-error? is missing
+;; TEST features
+(assert (memq 'r7rs (features)))
+;; TEST file-error?
+(list file-error?)
 ;; TEST floor
 (assert (= 5 (floor 5.3)))
 ;; TEST floor-quotient
@@ -269,16 +307,21 @@
 (assert (call-with-values (lambda () (floor/ -5 2)) (lambda (a b) (and (= a -3) (= b 1)))))
 (assert (call-with-values (lambda () (floor/ 5 -2)) (lambda (a b) (and (= a -3) (= b -1)))))
 (assert (call-with-values (lambda () (floor/ -5 -2)) (lambda (a b) (and (= a 2) (= b -1)))))
-;; flush-output-port is missing
+;; TEST flush-output-port
+(list flush-output-port)
 ;; TEST for-each 1 list
 (define x 0) (for-each (lambda (o) (set! x (+ x o))) '(1 2 3 4)) (assert (= x 10))
 ;; TEST for-each 2 lists, different length
 (define x 0) (for-each (lambda (a b c) (set! x (+ x (+ a b c)))) '(1 2 3 4) '(1 2) '(1 2 3)) (assert (= x 9))
 ;; TEST gcd
 (assert (= 782 (gcd 72726 17986)))
-;; get-output-bytevector is missing
-;; get-output-string is missing
-;; guard is missing
+;; TEST get-output-bytevector
+(assert (equal? (bytevector 102 111 111) (let ((o (open-output-bytevector))) (display "foo" o) (get-output-bytevector o))))
+;; TEST get-output-string
+(assert (string=? "foo" (let ((o (open-output-string))) (display "foo" o) (get-output-string o))))
+;; TEST guard
+(assert (= 42 (guard (condition ((assq 'a condition) => cdr) ((assq 'b condition))) (raise (list (cons 'a 42))))))
+(assert (equal? '(b . 23) (guard (condition ((assq 'a condition) => cdr) ((assq 'b condition))) (raise (list (cons 'b 23))))))
 ;; TEST if
 (assert (= 0 (if #t 0 1)))
 (assert (= 1 (if #f 0 1)))
@@ -290,8 +333,10 @@
 (assert (inexact? (inexact 3)))
 ;; TEST inexact?
 (assert (inexact? 3.0))
-;; input-port-open? is missing
-;; input-port? is missing
+;; TEST input-port-open?
+(let ((p (open-input-string "foo"))) (assert (input-port-open? p)))
+;; TEST input-port?
+(let ((p (open-input-string "foo"))) (assert (input-port? p)))
 ;; TEST integer->char
 (assert (char=? #\a (integer->char 97)))
 ;; TEST integer?
@@ -317,14 +362,21 @@
 (assert (= 6 (let* ((x 2) (y (+ x 1))) (* x y))))
 ;; TEST let*-values
 (assert (equal? '(x y x y) (let ((a 'a) (b 'b) (x 'x) (y 'y)) (let*-values (((a b) (values x y)) ((x y) (values a b))) (list a b x y)))))
-;; let-syntax is missing
+;; TEST let-syntax
+(assert (eq? 'now (let-syntax ((given-that (syntax-rules () ((given-that test stmt1 stmt2 ...) (if test (begin stmt1 stmt2 ...))))))
+                    (let ((if #t))
+                      (given-that if (set! if 'now))
+                      if))))
+(assert (eq? 'outer (let ((x 'outer)) (let-syntax ((m (syntax-rules () ((m) x)))) (let ((x 'inner)) (m))))))
 ;; TEST let-values
 (assert (= 35 (let-values (((a b) (values 7 5))) (* a b))))
 ;; TEST letrec
 (assert (letrec ((even? (lambda (n) (if (zero? n) #t (odd? (- n 1))))) (odd? (lambda (n) (if (zero? n) #f (even? (- n 1)))))) (even? 88)))
 ;; TEST letrec*
 (assert (= 5 (letrec* ((p (lambda (x) (+ 1 (q (- x 1))))) (q (lambda (y) (if (zero? y) 0 (+ 1 (p (- y 1)))))) (x (p 5)) (y x)) y)))
-;; letrec-syntax is missing
+;; TEST letrec-syntax
+(assert (= 7 (letrec-syntax ((my-or (syntax-rules () ((my-or) #f) ((my-or e) e) ((my-or e1 e2 ...) (let ((temp e1)) (if temp temp (my-or e2 ...)))))))
+               (let ((x #f) (y 7) (temp 8) (let odd?) (if even?)) (my-or x (let temp) (if y) y)))))
 ;; TEST list
 (assert (equal? '(1 2 3) (list 1 2 3)))
 (assert (equal? '() (list)))
@@ -378,10 +430,12 @@
 (assert (equal? '(b c) (memv 'b '(a b c))))
 ;; TEST min
 (assert (= 1 (min 1 2 3 4 5)))
-;; modulo is missing
+;; TEST modulo
+(assert (= -2 (modulo 10 -3)))
 ;; TEST negative?
 (assert (negative? -1))
-;; newline is missing
+;; TEST newline
+(assert (string=? "\n" (let ((p (open-output-string))) (newline p) (get-output-string p))))
 ;; TEST not
 (assert (not #f))
 (assert (not (not #t)))
@@ -401,16 +455,22 @@
 (assert (= 5 (numerator 5/17)))
 ;; TEST odd?
 (assert (odd? 3))
-;; open-input-bytevector is missing
-;; open-input-string is missing
-;; open-output-bytevector is missing
-;; open-output-string is missing
+;; TEST open-input-bytevector
+(let ((p (open-input-bytevector (bytevector 1 2 3)))) (assert (input-port? p)))
+;; TEST open-input-string
+(let ((p (open-input-string "foo"))) (assert (input-port? p)))
+;; TEST open-output-bytevector
+(let ((p (open-output-bytevector))) (assert (output-port? p)))
+;; TEST open-output-string
+(let ((p (open-output-string))) (assert (output-port? p)))
 ;; TEST or no forms
 (assert (not (or)))
 ;; TEST or short-circuit
 (assert (or #f #t (/ 1 0)))
-;; output-port-open? is missing
-;; output-port? is missing
+;; TEST output-port-open?
+(let ((p (open-output-string))) (assert (output-port-open? p)))
+;; TEST output-port?
+(let ((p (open-output-string))) (assert (output-port? p)))
 ;; TEST pair?
 (assert (pair? '(1 . 2)))
 (assert (not (pair? 'b)))
@@ -418,34 +478,74 @@
 (define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (assert (= (p) 5)))
 ;; TEST parameterize nested
 (define p (make-parameter 0)) (assert (= (p) 0)) (parameterize ((p 5)) (parameterize ((p 7)) (assert (= (p) 7))))
-;; peek-char is missing
-;; peek-u8 is missing
-;; port? is missing
+;; TEST peek-char
+(assert (char=? #\a (peek-char (open-input-string "abc"))))
+;; TEST peek-u8
+(assert (= 123 (peek-u8 (open-input-bytevector (bytevector 123 234 34)))))
+;; TEST port?
+(assert (port? (current-output-port)))
 ;; TEST positive?
 (assert (positive? 1))
 ;; TEST procedure?
 (assert (procedure? procedure?))
-;; quasiquote is missing
+;; TEST quasiquote
+(assert (equal? (quasiquote (1 2 3)) `(1 2 3)))
+(assert (equal? '(1 2 3) `(1 ,(+ 1 1) ,(+ 1 2))))
 ;; TEST quote
 (assert (eq? 'foo (quote foo)))
-;; quotient is missing
-;; raise is missing
-;; raise-continuable is missing
+;; TEST quotient
+(assert (= -3 (quotient 10 -3)))
+;; TEST raise
+(assert (= 42 (guard (condition ((assq 'a condition) => cdr) ((assq 'b condition))) (raise (list (cons 'a 42))))))
+;; TEST raise-continuable
+(define p (open-output-string)) (assert (= 65 (with-exception-handler (lambda (con) (cond ((string? con) (display con p)) (else (display "a warning has been issued" p))) 42) (lambda () (+ (raise-continuable "should be a number") 23))))) (assert (string=? "should be a number" (get-output-string p)))
 ;; TEST rational?
 (assert (rational? 3/4))
 ;; TEST rationalize
 (assert (= 1/3 (rationalize (exact .3) 1/10)))
 (assert (= #i1/3 (rationalize .3 1/10)))
-;; read-bytevector is missing
-;; read-bytevector! is missing
-;; read-char is missing
-;; read-error? is missing
-;; read-line is missing
-;; read-string is missing
-;; read-u8 is missing
+;; read-bytevector one argument
+(assert (equal? (bytevector 1 2 3) (parameterize ((current-input-port (open-input-bytevector (bytevector 1 2 3 4 5)))) (read-bytevector 3))))
+;; read-bytevector two arguments
+(assert (equal? (bytevector 1 2 3) (read-bytevector 3 (open-input-bytevector (bytevector 1 2 3 4 5)))))
+;; TEST read-bytevector! one parameter
+(define bv (make-bytevector 3))
+(assert (= 3 (parameterize ((current-input-port (open-input-bytevector (bytevector 1 2 3)))) (read-bytevector! bv))))
+(assert (equal? (bytevector 1 2 3) bv))
+;; TEST read-bytevector! two parameters
+(define bv (make-bytevector 3))
+(assert (= 3 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)))))
+(assert (equal? (bytevector 1 2 3) bv))
+;; TEST read-bytevector! three parameters
+(define bv (make-bytevector 3))
+(assert (= 2 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)) 1)))
+(assert (equal? (bytevector 0 1 2) bv))
+;; TEST read-bytevector! four parameters
+(define bv (make-bytevector 3))
+(assert (= 1 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)) 1 2)))
+(assert (equal? (bytevector 0 1 0) bv))
+;; TEST read-char no arguments
+(assert (char=? #\f (parameterize ((current-input-port (open-input-string "foobar"))) (read-char))))
+;; TEST read-char one argument
+(assert (char=? #\f (read-char (open-input-string "foobar"))))
+;; TEST read-error?
+(list read-error?)
+;; TEST read-line no arguments
+(assert (string=? "foobar" (parameterize ((current-input-port (open-input-string "foobar\nbaaz\n"))) (read-line))))
+;; TEST read-line one argument
+(assert (string=? "foobar" (read-line (open-input-string "foobar\nbaaz\n"))))
+;; read-string one argument
+(assert (equal? "foo" (parameterize ((current-input-port (open-input-string "foobar"))) (read-string 3))))
+;; read-string two arguments
+(assert (equal? "foo" (read-string 3 (open-input-string "foobar"))))
+;; TEST read-u8 no arguments
+(assert (= 1 (parameterize ((current-input-port (open-input-bytevector (bytevector 1 2 3)))) (read-u8))))
+;; TEST read-u8 one argument
+(assert (= 2 (read-u8 (open-input-bytevector (bytevector 2 3 4)))))
 ;; TEST real?
 (assert (real? 3.14))
-;; remainder is missing
+;; TEST remainder
+(assert (= 1 (remainder 10 -3)))
 ;; TEST reverse
 (assert (equal? '(4 3 2 1) (reverse '(1 2 3 4))))
 ;; TEST round
@@ -536,8 +636,10 @@
 ;; TEST symbol?
 (assert (symbol? 'a))
 ;; syntax-error is missing
-;; syntax-rules is missing
-;; textual-port? is missing
+;; TEST syntax-rules
+(define-syntax push! (syntax-rules () ((push! el lst) (set! lst (cons el lst))))) (define l '(1 2 3)) (push! 'a l) (assert (eq? (car l) 'a))
+;; TEST textual-port?
+(list textual-port?)
 ;; TEST truncate
 (assert (= -2 (truncate -2.5)))
 (assert (= 2 (truncate 2.5)))
@@ -551,11 +653,14 @@
 (assert (call-with-values (lambda () (truncate/ 5 -2)) (lambda (a b) (and (= a -2) (= b 1)))))
 (assert (call-with-values (lambda () (truncate/ -5 -2)) (lambda (a b) (and (= a 2) (= b -1)))))
 (assert (call-with-values (lambda () (truncate/ -5.0 -2)) (lambda (a b) (and (= a 2.0) (= b -1.0)))))
-;; u8-ready? is missing
+;; TEST u8-ready?
+(let ((x (open-input-bytevector (bytevector 1 2 3)))) (assert (u8-ready? x)))
 ;; TEST unless
 (unless #f "foo" 'ok)
-;; unquote is missing
-;; unquote-splicing is missing
+;; TEST unquote
+(assert (equal? '(1 2 3) (quasiquote (1 (unquote (+ 1 1)) ,(+ 1 2)))))
+;; TEST unquote-splicing
+(assert (equal? '(1 + 1 1 1 2) (quasiquote (1 (unquote-splicing '(+ 1 1)) ,@(list 1 2)))))
 ;; TEST utf8->string
 (assert (equal? "A" (utf8->string (bytevector #x41))))
 ;; TEST vector
@@ -609,17 +714,41 @@
 ;; TEST when
 (when #f (assert #f))
 (when #t (assert #t))
-;; with-exception-handler is missing
-;; write-bytevector is missing
-;; write-char is missing
-;; write-string is missing
-;; write-u8 is missing
+;; TEST with-exception-handler
+(assert (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error 3))))))
+;; TEST write-bytevector one parameter
+(assert (equal? (bytevector 1 2 3) (let ((p (open-output-bytevector))) (parameterize ((current-output-port p)) (write-bytevector (bytevector 1 2 3))) (get-output-bytevector p))))
+;; TEST write-bytevector two parameters
+(assert (equal? (bytevector 1 2 3) (let ((p (open-output-bytevector))) (write-bytevector (bytevector 1 2 3) p) (get-output-bytevector p))))
+;; TEST write-bytevector three parameters
+(assert (equal? (bytevector 2 3) (let ((p (open-output-bytevector))) (write-bytevector (bytevector 1 2 3) p 1) (get-output-bytevector p))))
+;; TEST write-bytevector four parameters
+(assert (equal? (bytevector 2) (let ((p (open-output-bytevector))) (write-bytevector (bytevector 1 2 3) p 1 2) (get-output-bytevector p))))
+;; TEST write-char
+(let ((p (open-output-string))) (write-char #\x p) (assert (char=? #\x (string-ref (get-output-string p) 0))))
+;; TEST write-string one parameter
+(assert (equal? "foo" (let ((p (open-output-string))) (parameterize ((current-output-port p)) (write-string "foo")) (get-output-string p))))
+;; TEST write-string two parameters
+(assert (equal? "foo" (let ((p (open-output-string))) (write-string "foo" p) (get-output-string p))))
+;; TEST write-string three parameters
+(assert (equal? "oo" (let ((p (open-output-string))) (write-string "foo" p 1) (get-output-string p))))
+;; TEST write-string four parameters
+(assert (equal? "o" (let ((p (open-output-string))) (write-string "foo" p 1 2) (get-output-string p))))
+;; TEST write-u8
+(let ((p (open-output-bytevector))) (write-u8 123 p) (assert (= 123 (bytevector-u8-ref (get-output-bytevector p) 0))))
 ;; TEST zero?
 (assert (zero? 0))
-;; TEST literals cons
+
+;; TEST literals pair
 (assert '(1 . 2))
 ;; TEST literals list
 (assert '(1 2 3 4 5))
+;; TEST literals bytevector
+(assert #u8(1 2 3 4 5))
+;; TEST literals vector
+(assert #(1 2 3 4 5))
+;; TEST literals cyclic list
+(assert (eq? 'a (car '#1=(a b . #1#))))
 ;; TEST literals chars
 (assert (list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab))
 ;; TEST literal string

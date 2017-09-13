@@ -4,6 +4,11 @@ GUILE=${GUILE:-guile}
 CPU_LIMIT=${CPU_LIMIT:-"2"}
 
 case "$1" in
+    gerbil) SCHEME_EXE=gerbil_exec
+         SCHEME_NAME=gerbil
+         SCHEME_VERSION="unknown"
+         ;;
+
     mit) SCHEME_EXE=mit_scheme_exec
          SCHEME_NAME=mit
          SCHEME_VERSION=$(mit-scheme --version | grep Release | cut -f 4 -d\  )
@@ -88,6 +93,11 @@ picrin_exec() {
 
 mosh_exec() {
     mosh-scheme $1
+    status=$?
+}
+
+gerbil_exec() {
+    gxi --lang r7rs $1
     status=$?
 }
 

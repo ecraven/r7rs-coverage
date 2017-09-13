@@ -2,11 +2,14 @@
 
 all: errors.csv
 
-errors.csv: mit chicken guile chibi larceny picrin gambitc gauche racket cyclone
+errors.csv: gerbil mit chicken guile chibi larceny picrin gambitc gauche racket cyclone
 
 mit: mit.log
 mit.log:
 	./coverage mit
+gerbil: gerbil.log
+gerbil.log:
+	./coverage gerbil
 chicken: chicken.log
 chicken.log:
 	./coverage chicken
