@@ -383,7 +383,7 @@
 ;; TEST list->string
 (assert (string=? "foo" (list->string '(#\f #\o #\o))))
 ;; TEST list->vector
-(assert (equal? #(1 2 3) (list->vector '(1 2 3))))
+(assert (equal? (vector 1 2 3) (list->vector '(1 2 3))))
 ;; TEST list-copy
 (assert (let ((l '(1 2 3))) (and (not (eq? l (list-copy l))) (equal? l (list-copy l)))))
 ;; TEST list-ref
@@ -578,11 +578,11 @@
 ;; Test string->utf8
 (assert (equal? (bytevector #xce #xbb) (string->utf8 "λ")))
 ;; TEST string->vector
-(assert (equal? #(#\f #\o #\o) (string->vector "foo")))
+(assert (equal? (vector #\f #\o #\o) (string->vector "foo")))
 ;; TEST string->vector start
-(assert (equal? #(#\f #\o #\o) (string->vector "xfoo" 1)))
+(assert (equal? (vector #\f #\o #\o) (string->vector "xfoo" 1)))
 ;; TEST string->vector start and end
-(assert (equal? #(#\f #\o #\o) (string->vector "xfoox" 1 4)))
+(assert (equal? (vector #\f #\o #\o) (string->vector "xfoox" 1 4)))
 ;; TEST string-append
 (assert (string=? "foobar" (string-append "foo" "bar")))
 ;; TEST string-copy
@@ -664,53 +664,53 @@
 ;; TEST utf8->string
 (assert (equal? "A" (utf8->string (bytevector #x41))))
 ;; TEST vector
-(assert (equal? #(1 2 3) (vector 1 2 3)))
+(assert (equal? (vector 1 2 3) (vector 1 2 3)))
 ;; TEST vector->list
-(assert (equal? '(1 2 3) (vector->list #(1 2 3))))
+(assert (equal? '(1 2 3) (vector->list (vector 1 2 3))))
 ;; TEST vector->list start
-(assert (equal? '(1 2 3) (vector->list #(5 1 2 3) 1)))
+(assert (equal? '(1 2 3) (vector->list (vector 5 1 2 3) 1)))
 ;; TEST vector->list start and end
-(assert (equal? '(1 2 3) (vector->list #(5 1 2 3 6) 1 4)))
+(assert (equal? '(1 2 3) (vector->list (vector 5 1 2 3 6) 1 4)))
 ;; TEST vector->string
-(assert (string=? "foo" (vector->string #(#\f #\o #\o))))
+(assert (string=? "foo" (vector->string (vector #\f #\o #\o))))
 ;; TEST vector->string start
-(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o) 1)))
+(assert (string=? "foo" (vector->string (vector #\x #\f #\o #\o) 1)))
 ;; TEST vector->string start and end
-(assert (string=? "foo" (vector->string #(#\x #\f #\o #\o #\x) 1 4)))
+(assert (string=? "foo" (vector->string (vector #\x #\f #\o #\o #\x) 1 4)))
 ;; TEST vector-append
-(assert (equal? #(1 2 3 4) (vector-append #(1 2) #(3 4))))
+(assert (equal? (vector 1 2 3 4) (vector-append (vector 1 2) (vector 3 4))))
 ;; TEST vector-copy
-(assert (let ((v #(1 2 3))) (and (equal? v (vector-copy v)) (not (eq? v (vector-copy v))))))
+(assert (let ((v (vector 1 2 3))) (and (equal? v (vector-copy v)) (not (eq? v (vector-copy v))))))
 ;; TEST vector-copy start
-(assert (let ((v #(5 1 2 3))) (equal? #(1 2 3) (vector-copy v 1))))
+(assert (let ((v (vector 5 1 2 3))) (equal? (vector 1 2 3) (vector-copy v 1))))
 ;; TEST vector-copy start and end
-(assert (let ((v #(5 1 2 3 5))) (equal? #(1 2 3) (vector-copy v 1 4))))
+(assert (let ((v (vector 5 1 2 3 5))) (equal? (vector 1 2 3) (vector-copy v 1 4))))
 ;; TEST vector-copy!
-(define v (make-vector 3)) (vector-copy! v 0 #(1 2 3)) (assert (equal? #(1 2 3) v))
+(define v (make-vector 3)) (vector-copy! v 0 (vector 1 2 3)) (assert (equal? (vector 1 2 3) v))
 ;; TEST vector-copy! start
-(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3) 1) (assert (equal? #(1 2 3) v))
+(define v (make-vector 3 #\x)) (vector-copy! v 0 (vector 5 1 2 3) 1) (assert (equal? (vector 1 2 3) v))
 ;; TEST vector-copy! start and end
-(define v (make-vector 3 #\x)) (vector-copy! v 0 #(5 1 2 3 4) 1 4) (assert (equal? #(1 2 3) v))
+(define v (make-vector 3 #\x)) (vector-copy! v 0 (vector 5 1 2 3 4) 1 4) (assert (equal? (vector 1 2 3) v))
 ;; TEST vector-fill!
-(define v (make-vector 3 0)) (vector-fill! v 1) (assert (equal? #(1 1 1) v))
+(define v (make-vector 3 0)) (vector-fill! v 1) (assert (equal? (vector 1 1 1) v))
 ;; TEST vector-fill! start
-(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? #(0 1 1) v))
+(define v (make-vector 3 0)) (vector-fill! v 1 1) (assert (equal? (vector 0 1 1) v))
 ;; TEST vector-fill! start and end
-(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? #(0 1 0) v))
+(define v (make-vector 3 0)) (vector-fill! v 1 1 2) (assert (equal? (vector 0 1 0) v))
 ;; TEST vector-for-each 2 vectors, different length
-(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) #(1 2 3 4 5) #(1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))
+(let ((v '())) (vector-for-each (lambda (a b) (set! v (cons (+ a b) v))) (vector 1 2 3 4 5) (vector 1 2 3 4 5 6)) (assert (equal? '(10 8 6 4 2) v)))
 ;; TEST vector-length
-(assert (= 5 (vector-length #(1 2 3 4 5))))
+(assert (= 5 (vector-length (vector 1 2 3 4 5))))
 ;; TEST vector-map 1 vector
-(assert (equal? #(1 2 3) (vector-map (lambda (x) (+ x 1)) #(0 1 2))))
+(assert (equal? (vector 1 2 3) (vector-map (lambda (x) (+ x 1)) (vector 0 1 2))))
 ;; TEST vector-map 2 vectors, different length
-(assert (equal? #(5 7 9) (vector-map + #(1 2 3) #(4 5 6 7))))
+(assert (equal? (vector 5 7 9) (vector-map + (vector 1 2 3) (vector 4 5 6 7))))
 ;; TEST vector-ref
-(assert (= 3 (vector-ref #(1 2 3 4 5) 2)))
+(assert (= 3 (vector-ref (vector 1 2 3 4 5) 2)))
 ;; TEST vector-set!
 (define v (vector 1 2 3)) (vector-set! v 0 5) (assert (= 5 (vector-ref v 0)))
 ;; TEST vector?
-(assert (vector? #(1 2 3)))
+(assert (vector? (vector 1 2 3)))
 ;; TEST when
 (when #f (assert #f))
 (when #t (assert #t))
@@ -745,14 +745,21 @@
 (assert '(1 2 3 4 5))
 ;; TEST literals bytevector
 (assert #u8(1 2 3 4 5))
-;; TEST literals vector
+;; TEST literals vector constructor
+(assert (vector 1 2 3 4 5))
+;; TEST literals unquoted vector
 (assert #(1 2 3 4 5))
+;; TEST literals quoted vector
+(assert '#(1 2 3 4 5))
 ;; TEST literals cyclic list
 (assert (eq? 'a (car '#1=(a b . #1#))))
 ;; TEST literals chars
 (assert (list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab))
 ;; TEST literal string
 (assert "foobar\a\b\t\n\r\"\\\|\x12;")
-;; TEST literals boolean
-(assert (eq? #t #true))
-(assert (eq? #f #false))
+;; TEST literals boolean #t and #f
+(assert #t)
+(assert (not #f))
+;; TEST literals boolean #true and #false
+(assert #true)
+(assert (not #false))
