@@ -222,7 +222,11 @@
 (assert (equal? "abc" "abc"))
 ;; TEST equals? vectors
 (assert (equal? (make-vector 5 'a) (make-vector 5 'a)))
-;; TEST equals? cyclic list
+;; TEST equals? cyclic list with set-cdr
+(define l0 (cons 'a 'b)) (set-cdr! l0 l0)
+(define l1 (cons 'a 'b)) (set-cdr! l1 l1)
+(assert (equal? l0 l1))
+;; TEST equals? cyclic list literal
 (assert (equal? '#1=(a b . #1#) '#2= (a b a b . #2#)))
 ;; TEST eqv? true
 (assert (eqv? #t #t))
@@ -743,18 +747,22 @@
 (assert '(1 . 2))
 ;; TEST literals list
 (assert '(1 2 3 4 5))
-;; TEST literals bytevector
+;; TEST literals improper list
+(assert '(1 2 3 4 . 5))
+;; TEST literals unquoted bytevector
 (assert #u8(1 2 3 4 5))
-;; TEST literals vector constructor
-(assert (vector 1 2 3 4 5))
+;; TEST literals quoted bytevector
+(assert '#u8(1 2 3 4 5))
 ;; TEST literals unquoted vector
 (assert #(1 2 3 4 5))
 ;; TEST literals quoted vector
 (assert '#(1 2 3 4 5))
 ;; TEST literals cyclic list
 (assert (eq? 'a (car '#1=(a b . #1#))))
-;; TEST literals chars
+;; TEST literals named chars
 (assert (list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab))
+;; TEST literals basic chars
+(assert (list #\a #\0 #\-))
 ;; TEST literal string
 (assert "foobar\a\b\t\n\r\"\\\|\x12;")
 ;; TEST literals boolean #t and #f
