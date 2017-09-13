@@ -2,48 +2,45 @@
 
 all: errors.csv
 
-errors.csv: gerbil mit chicken guile chibi larceny picrin gambitc gauche racket cyclone
+errors.csv: gerbil mit chicken guile chibi larceny gauche racket cyclone
 
-mit: mit.log
+mit: mit.log Makefile
 mit.log:
 	./coverage mit
-gerbil: gerbil.log
+gerbil: gerbil.log Makefile
 gerbil.log:
 	./coverage gerbil
-chicken: chicken.log
+chicken: chicken.log Makefile
 chicken.log:
 	./coverage chicken
-guile: guile.log
+guile: guile.log Makefile
 guile.log:
 	./coverage guile
-chibi: chibi.log
+chibi: chibi.log Makefile
 chibi.log:
 	./coverage chibi
-larceny: larceny.log
+larceny: larceny.log Makefile
 larceny.log:
 	./coverage larceny
-kawa: kawa.log
+kawa: kawa.log Makefile
 kawa.log:
 	./coverage kawa
-picrin: picrin.log
+picrin: picrin.log Makefile
 picrin.log:
 	./coverage picrin
-gambitc: gambitc.log
-gambitc.log:
-	./coverage gambitc
-gauche: gauche.log
+gauche: gauche.log Makefile
 gauche.log:
 	./coverage gauche
-racket: racket.log
+racket: racket.log Makefile
 racket.log:
 	./coverage racket
-cyclone: cyclone.log
+cyclone: cyclone.log Makefile
 cyclone.log:
 	./coverage cyclone
 
 html: index.html
 
-index.html: errors.csv
+index.html: errors.csv stats.scm
 	mit-scheme --load stats.scm --eval '(begin (format-stats) (%exit 0))'
 
 clean:

@@ -6,7 +6,7 @@ CPU_LIMIT=${CPU_LIMIT:-"2"}
 case "$1" in
     gerbil) SCHEME_EXE=gerbil_exec
          SCHEME_NAME=gerbil
-         SCHEME_VERSION="unknown"
+         SCHEME_VERSION=$(gxi --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
          ;;
 
     mit) SCHEME_EXE=mit_scheme_exec
@@ -33,18 +33,10 @@ case "$1" in
           SCHEME_NAME=kawa
           SCHEME_VERSION=$(kawa  --version | head -n 1 | cut -d\  -f 2)
           ;;
-    mosh) SCHEME_EXE=mosh_exec
-          SCHEME_NAME=mosh
-          SCHEME_VERSION=$(mosh-scheme -v | cut -f 6 -d\  )
-          ;;
     picrin) SCHEME_EXE=picrin_exec
             SCHEME_NAME=picrin
             SCHEME_VERSION="unknown"
             ;;
-    gambitc) SCHEME_EXE=gambitc_exec
-             SCHEME_NAME=gambitc
-             SCHEME_VERSION=$(gsi -e '(display (system-version-string))')
-             ;;
     gauche) SCHEME_EXE=gauche_exec
             SCHEME_NAME=gauche
             SCHEME_VERSION=$(gosh -V | cut -f 5 -d\  )
@@ -79,20 +71,8 @@ gauche_exec() {
     status=$?
 }
 
-gambitc_exec() {
-    exe=$(mktemp)
-    ( gambitc -o $exe -exe $1 && $exe ) >> gambitc.log 2>&1
-    status=$?
-    rm $exe
-}
-
 picrin_exec() {
     picrin $1
-    status=$?
-}
-
-mosh_exec() {
-    mosh-scheme $1
     status=$?
 }
 

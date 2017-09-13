@@ -83,6 +83,28 @@
    (format #f "id~a" *current-id*)
    (set! *current-id* (+ 1 *current-id*))))
 
+(define *console* (current-output-port))
+
+(define (group-stats data group scheme)
+;;  (format *console* "group-stats ~a ~a ~a" data group scheme) (flush-output)
+  (let ((gr (nested-hash-table/get data #f group))
+        (pos 0)
+        (neg 0))
+    (hash-table/for-each gr
+                         (lambda (k function)
+                           (hash-table/for-each function
+                                                (lambda (k test)
+                                                  (let ((r (hash-table/get test scheme #f)))
+                                                    (if r
+                                                        (case r
+                                                          ((ok) (set! pos (+ pos 1)))
+                                                          ((error) (set! neg (+ neg 1)))
+                                                          (else (error "unknown result" r)))
+                                                        (format *console* "ERROR: no result for ~a ~a ~a~%" data group scheme)
+                                                        ))))))
+    (format #f "~a ~a"
+            (if (zero? pos) "" (format #f "<small class=\"ok\">~a</small><i class=\"fa fa-check\"></i>" pos))
+            (if (zero? neg) "" (format #f "<small class=\"error\">~a</small><i class=\"fa fa-times\"></i>" neg)))))
 (define (format-stats)
   (with-output-to-file "index.html"
     (lambda ()
@@ -92,21 +114,24 @@
       (set! *group-results* (make-hash-table))
       (set! *tests* (make-hash-table))
       (parse-data)
-      (format #t "<head><link rel=\"stylesheet\" href=\"https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css\" integrity=\"sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE\" crossorigin=\"anonymous\"></head><body>~%")
-      (format #t "<style>
+      (let ((scheme-list (sort *schemes* symbol<?)))
+        (format #t "<head><link rel=\"stylesheet\" href=\"https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css\" integrity=\"sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE\" crossorigin=\"anonymous\"></head><body>~%")
+        (format #t "<style>
 body { max-width: 1800px; }
-.group { font-size: 130%; }
-.testname { font-style: italic; }
+.group { font-size: 130%; border-top: 2px solid grey; border-bottom: 1px solid grey; }
+.testname { font-style: italic; font-size: 80%; font-weight: lighter; }
 .offset { margin-left: 1em; }
 .selected { background-color: #060; }
 i.fa-check { color: #0b0; min-width: 1em; }
 i.fa-times { color: #b00; min-width: 1em; }
 i.fa-adjust { color: #880; min-width: 1em; }
+.ok { color: #0b0; }
+.error { color: #b00; }
 .details { color: #888; font-size: 70%; }
-table { margin: 0; padding: 0; cell-padding: 0; width: 100%; }
+table { margin: 0; padding: 0; cell-padding: 0; width: 100%; border-collapse: collapse; }
 th { position: sticky; top: 0; background-color: white; }
 td { text-align: center; }
-tr td:first-child { text-align: right; }
+tr td:first-child { text-align: right; width: 10em; }
 tbody tr:hover { background-color: #ddd; }
 </style>
 
@@ -138,61 +163,48 @@ document.addEventListener(\"DOMContentLoaded\", function() {
   hideAllTests();
 });
 </script>")
-      (format #t "<table><thead><tr>")
-      (for-each (lambda (scheme)
-                  (if (symbol? scheme)
-                      (let* ((parts (burst-string (symbol->string scheme) #\- #f))
-                             (name (car parts))
-                             (version (cadr parts)))
-                        (format #t "<th>~a<br/><small>~a</small></th>" name version))
-                      (format #t "<th>~a</th>" scheme)))
-                (cons "" (sort *schemes* symbol<?)))
-      (format #t "</tr></thead><tbody>")
-      (for-each (lambda (group)
-                  (format #t "<tr class=\"group\"><td>~a</td>~%" (symbol->string group))
-                  ;; (for-each (lambda (scheme)
-                  ;;             (let ((res (nested-hash-table/get *group-results* 0 group scheme)))
-                  ;;               (format #t "<td>~a/~a</td>~%" res (length (hash-table/get *tests* group '() )))))
-                  ;;           (sort *schemes* symbol<?))
-                  (format #t "</tr>~%")
-                  (for-each (lambda (test)
-                              (let ((r (get-res group test))
-                                    (id (next-id)))
-                                (format #t "<tr id=\"~a\" class=\"test-summary\"><td>~a</td>~%" id test)
-                                (for-each (lambda (scheme)
-                                            (let* ((x (map (lambda (res)
-                                                             (if (eq? 'error (hash-table/get (cdr res) scheme 'error)) 0 1))
-                                                           r))
-                                                   (ok (apply + x))
-                                                   (total (length x)))
-                                              (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/> <span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "adjust")) (format #f "~a/~a" ok total)))) ;;  
-                                          (sort *schemes* symbol<?))
-                                (format #t "</tr>~%")
-                                (for-each (lambda (res)
-                                            (format #t "<tr data-child-of=\"~a\" class=\"test\"><td><span class=\"testname offset\">~a</span></td>~%" id (if (string-null? (car res)) test (car res)))
-                                            (for-each (lambda (scheme)
-                                                        (let ((x (hash-table/get (cdr res) scheme 'unknown)))
-                                                          (format #t "<td class=\"~a\"><i class=\"offset fa fa-~a\"/></td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "check" "times"))))
-                                                      (sort *schemes* symbol<?))
-                                            (format #t "</tr>"))
-                                          (sort r (lambda (a b) (string<? (car a) (car b)))))))
-                            (sort (hash-table/get *tests* group '()) string<?)))
-                (sort *groups* symbol<?))
-      (format #t "</tbody></table>")
-      ;;      (format #t "<table><thead><tr><th>Scheme</th><th>Percentage</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
-      ;; (hash-table-walk *schemes*
-      ;;                  (lambda (k v)
-      ;;                    (let ((ok (hash-table/get v '|OK| 0))
-      ;;                          (error (hash-table/get v '|ERROR| 0)))
-      ;;                      (format #t "<tr><td>~a</td><td>~a%</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
-      ;; (format #t "</tbody></table>")
-      ;; (format #t "<table><thead><tr><th>Group</th><th>Ok</th><th>Error</th></tr></thead><tbody>~%")
-      ;; (hash-table-walk *groups*
-      ;;                  (lambda (k v)
-      ;;                    (let ((ok (hash-table/get v '|OK| 0))
-      ;;                          (error (hash-table/get v '|ERROR| 0)))
-      ;;                      (format #t "<tr><td>~a</td><td>~a</td><td>~a</td><td>~a</td></tr>~%" k (inexact (* 100 (/ ok (+ ok error)))) ok error))))
-      ;; (format #t "</tbody></table>")
-      ;; (format #t "")
-
-      )))
+        (format #t "<table><thead><tr>")
+        (for-each (lambda (scheme)
+                    (if (symbol? scheme)
+                        (let* ((parts (burst-string (symbol->string scheme) #\- #f))
+                               (name (car parts))
+                               (version (cadr parts)))
+                          (format #t "<th>~a<br/><small>~a</small></th>" name version))
+                        (format #t "<th>~a</th>" scheme)))
+                  (cons "" scheme-list))
+        (format #t "</tr></thead><tbody>")
+        (for-each (lambda (group)
+                    (format #t "<tr class=\"group\"><td>~a</td>" (symbol->string group))
+                    (for-each (lambda (scheme)
+                                (format #t "<td>~a</td>" (group-stats *data* group scheme)))
+                              scheme-list)
+                    (format #t "</tr>~%")
+                    ;; (for-each (lambda (scheme)
+                    ;;             (let ((res (nested-hash-table/get *group-results* 0 group scheme)))
+                    ;;               (format #t "<td>~a/~a</td>~%" res (length (hash-table/get *tests* group '() )))))
+                    ;;           (sort *schemes* symbol<?))
+                    (format #t "</tr>~%")
+                    (for-each (lambda (test)
+                                (let ((r (get-res group test))
+                                      (id (next-id)))
+                                  (format #t "<tr id=\"~a\" class=\"test-summary\"><td>~a</td>~%" id test)
+                                  (for-each (lambda (scheme)
+                                              (let* ((x (map (lambda (res)
+                                                               (if (eq? 'error (hash-table/get (cdr res) scheme 'error)) 0 1))
+                                                             r))
+                                                     (ok (apply + x))
+                                                     (total (length x)))
+                                                (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/> <span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "adjust")) (format #f "~a/~a" ok total)))) ;;  
+                                            (sort *schemes* symbol<?))
+                                  (format #t "</tr>~%")
+                                  (for-each (lambda (res)
+                                              (format #t "<tr data-child-of=\"~a\" class=\"test\"><td><span class=\"testname offset\">~a</span></td>~%" id (if (string-null? (car res)) test (car res)))
+                                              (for-each (lambda (scheme)
+                                                          (let ((x (hash-table/get (cdr res) scheme 'unknown)))
+                                                            (format #t "<td class=\"~a\"><i class=\"offset fa fa-~a\"/></td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "check" "times"))))
+                                                        (sort *schemes* symbol<?))
+                                              (format #t "</tr>"))
+                                            (sort r (lambda (a b) (string<? (car a) (car b)))))))
+                              (sort (hash-table/get *tests* group '()) string<?)))
+                  (sort *groups* symbol<?))
+        (format #t "</tbody></table>")))))
