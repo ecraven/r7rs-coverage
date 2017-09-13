@@ -744,9 +744,9 @@
 (assert (zero? 0))
 
 ;; TEST literals pair
-(assert '(1 . 2))
+(assert (equal? (cons 1 2) '(1 . 2)))
 ;; TEST literals list
-(assert '(1 2 3 4 5))
+(assert (equal? (list 1 2 3 4 5) '(1 2 3 4 5)))
 ;; TEST literals improper list
 (assert '(1 2 3 4 . 5))
 ;; TEST literals unquoted bytevector

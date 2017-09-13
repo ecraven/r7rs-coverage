@@ -1,6 +1,6 @@
 .PHONY: all html clean
 
-all: errors.csv
+all: mit gerbil chicken guile chibi larceny kawa gauche racket cyclone
 
 mit: mit.log Makefile
 mit.log:

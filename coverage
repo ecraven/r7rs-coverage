@@ -57,27 +57,27 @@ esac
 
 
 racket_exec() {
-    racket $1
+    timeout ${CPU_LIMIT} racket $1
     status=$?
 }
 
 cyclone_exec() {
-    cyclone $1
+    timeout ${CPU_LIMIT} cyclone $1
     status=$?
 }
 
 gauche_exec() {
-    gosh -r7 -b $1
+    timeout ${CPU_LIMIT} gosh -r7 -b $1
     status=$?
 }
 
 picrin_exec() {
-    picrin $1
+    timeout ${CPU_LIMIT} picrin $1
     status=$?
 }
 
 gerbil_exec() {
-    gxi --lang r7rs $1
+    timeout ${CPU_LIMIT} gxi --lang r7rs $1
     status=$?
 }
 
@@ -97,7 +97,7 @@ kawa_exec() {
 }
 
 csi_exec() {
-    csi < $1 > /tmp/csi.log 2>&1
+    timeout ${CPU_LIMIT} csi < $1 > /tmp/csi.log 2>&1
     if grep 'Error: ' /tmp/csi.log
     then
         status=1
@@ -107,17 +107,17 @@ csi_exec() {
 }
 
 mit_scheme_exec() {
-    mit-scheme < $1
+    timeout ${CPU_LIMIT} mit-scheme < $1
     status=$?
 }
 
 guile_exec() {
-    ${GUILE} $1
+    timeout ${CPU_LIMIT} ${GUILE} $1
     status=$?
 }
 
 chibi_exec() {
-    chibi-scheme < $1 > /tmp/chibi.log 2>&1
+    timeout ${CPU_LIMIT} chibi-scheme < $1 > /tmp/chibi.log 2>&1
     if grep 'ERROR' /tmp/chibi.log
     then
         status=1
