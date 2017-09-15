@@ -195,12 +195,12 @@
 ;; TEST do
 (assert (= 25 (let ((x '(1 3 5 7 9))) (do ((x x (cdr x)) (sum 0 (+ sum (car x)))) ((null? x) sum)))))
 ;; TEST dynamic-wind
-(let ((o (open-output-string))) (assert (= 2 (dynamic-wind (lambda () (display "1" o)) (lambda () 2) (lambda () (display "3" o))))) (assert (string=? (get-output-string o) "13")))
+(let ((o '())) (assert (equal? '(3 2 1) (begin (dynamic-wind (lambda () (set! o (cons 1 o))) (lambda () (set! o (cons 2 o))) (lambda () (set! o (cons 3 o)))) o))))
 ;; else is missing here
 ;; TEST eof-object
 (assert (eof-object)) (assert (eof-object? (eof-object)))
 ;; TEST eof-object?
-(assert (eof-object? (read (open-input-string ""))))
+(assert (eof-object? (read-char (open-input-string ""))))
 ;; TEST eq? symbols
 (assert (eq? 'a 'a))
 ;; TEST eq? different lists
@@ -320,9 +320,9 @@
 ;; TEST gcd
 (assert (= 782 (gcd 72726 17986)))
 ;; TEST get-output-bytevector
-(assert (equal? (bytevector 102 111 111) (let ((o (open-output-bytevector))) (display "foo" o) (get-output-bytevector o))))
+(assert (equal? (bytevector) (let ((o (open-output-bytevector))) (get-output-bytevector o))))
 ;; TEST get-output-string
-(assert (string=? "foo" (let ((o (open-output-string))) (display "foo" o) (get-output-string o))))
+(assert (string=? "" (let ((o (open-output-string))) (get-output-string o)))) ;; cannot (display "foo" o), no write/display without (scheme write)
 ;; TEST guard
 (assert (= 42 (guard (condition ((assq 'a condition) => cdr) ((assq 'b condition))) (raise (list (cons 'a 42))))))
 (assert (equal? '(b . 23) (guard (condition ((assq 'a condition) => cdr) ((assq 'b condition))) (raise (list (cons 'b 23))))))
@@ -372,8 +372,10 @@
                       (given-that if (set! if 'now))
                       if))))
 (assert (eq? 'outer (let ((x 'outer)) (let-syntax ((m (syntax-rules () ((m) x)))) (let ((x 'inner)) (m))))))
-;; TEST let-values
+;; TEST let-values multiple values
 (assert (= 35 (let-values (((a b) (values 7 5))) (* a b))))
+;; TEST let-values single list
+(let-values ((x (values 7 5))) (assert (equal? '(7 5) x)))
 ;; TEST letrec
 (assert (letrec ((even? (lambda (n) (if (zero? n) #t (odd? (- n 1))))) (odd? (lambda (n) (if (zero? n) #f (even? (- n 1)))))) (even? 88)))
 ;; TEST letrec*
@@ -513,19 +515,19 @@
 ;; read-bytevector two arguments
 (assert (equal? (bytevector 1 2 3) (read-bytevector 3 (open-input-bytevector (bytevector 1 2 3 4 5)))))
 ;; TEST read-bytevector! one parameter
-(define bv (make-bytevector 3))
+(define bv (make-bytevector 3 0))
 (assert (= 3 (parameterize ((current-input-port (open-input-bytevector (bytevector 1 2 3)))) (read-bytevector! bv))))
 (assert (equal? (bytevector 1 2 3) bv))
 ;; TEST read-bytevector! two parameters
-(define bv (make-bytevector 3))
+(define bv (make-bytevector 3 0))
 (assert (= 3 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)))))
 (assert (equal? (bytevector 1 2 3) bv))
 ;; TEST read-bytevector! three parameters
-(define bv (make-bytevector 3))
+(define bv (make-bytevector 3 0))
 (assert (= 2 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)) 1)))
 (assert (equal? (bytevector 0 1 2) bv))
 ;; TEST read-bytevector! four parameters
-(define bv (make-bytevector 3))
+(define bv (make-bytevector 3 0))
 (assert (= 1 (read-bytevector! bv (open-input-bytevector (bytevector 1 2 3)) 1 2)))
 (assert (equal? (bytevector 0 1 0) bv))
 ;; TEST read-char no arguments
