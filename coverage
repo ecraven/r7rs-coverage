@@ -49,6 +49,10 @@ case "$1" in
              SCHEME_NAME=cyclone
              SCHEME_VERSION=$(cyclone -v | grep Version | sed 's/.*Version \([^ ][^ ]*\).*/\1/')
              ;;
+    foment) SCHEME_EXE=foment_exec
+            SCHEME_NAME=foment
+            SCHEME_VERSION=$(foment --version | cut -f 2 -d-)
+            ;;
 
     *) echo "Unknown Scheme"
        exit -1
@@ -125,6 +129,12 @@ chibi_exec() {
         status=0
     fi
 }
+
+foment_exec() {
+    timeout ${CPU_LIMIT} foment $1
+    status=$?
+}
+
 temp_dir=$(mktemp -d)
 
 for pkg in input/*.scm
