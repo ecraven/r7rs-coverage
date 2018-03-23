@@ -146,11 +146,11 @@
 (assert (char? #\a))
 (assert (not (char? 3)))
 ;; TEST close-input-port
-(let ((p (open-input-string "foobar"))) (assert (input-port-open? p)) (close-input-port p) (assert (not (input-port-open? p))))
+(let ((p (open-input-string "foobar"))) (assert (eq? (read p) 'foobar)) (close-input-port p))
 ;; TEST close-output-port
-(let ((p (open-output-string))) (assert (output-port-open? p)) (close-output-port p) (assert (not (output-port-open? p))))
+(let ((p (open-output-string))) (write "foobar" p) (close-output-port p))
 ;; TEST close-port
-(let ((p (open-output-string))) (assert (output-port-open? p)) (close-port p) (assert (not (output-port-open? p))))
+(let ((p (open-output-string))) (write "foobar" p) (close-port p))
 ;; TEST complex?
 (assert (not (complex? 'a))) (assert (complex? 3))
 (assert (complex? 3+1i))
