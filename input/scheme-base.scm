@@ -119,7 +119,7 @@
 ;; TEST case else
 (assert (= 1 (case 'a ((b) 3) ((a f) 1) (else 2))))
 ;; TEST case =>
-(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w y) 'semivowel) (else => (lambda (x) x)))))
+(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w j) 'semivowel) (else => (lambda (x) x)))))
 ;; TEST cdar
 (assert (= 2 (cdar (list '(1 . 2)))))
 ;; TEST cddr
