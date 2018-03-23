@@ -35,6 +35,9 @@ racket.log:
 cyclone: cyclone.log Makefile
 cyclone.log:
 	./coverage cyclone
+chez: chez.log Makefile
+chez.log:
+	./coverage chez
 
 html: index.html
 

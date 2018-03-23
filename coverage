@@ -21,6 +21,10 @@ case "$1" in
            SCHEME_NAME=chibi
            SCHEME_VERSION=$(chibi-scheme  -V | cut -f 2 -d\  )
            ;;
+    chez) SCHEME_EXE=chez_exec
+           SCHEME_NAME=chez
+           SCHEME_VERSION=$(chez-scheme  --version)
+           ;;
     chicken) SCHEME_EXE=csi_exec
              SCHEME_NAME=chicken
              SCHEME_VERSION=$(csi -version | grep Version | cut -f 2 -d\   )
@@ -125,6 +129,21 @@ chibi_exec() {
         status=0
     fi
 }
+chez_exec() {
+    timeout ${CPU_LIMIT} chez-scheme --libdirs ~/scheme/chez < $1 > /tmp/chez.log 2>&1
+    if grep 'ERROR' /tmp/chez.log
+    then
+        status=1
+    else
+        if grep 'Exception' /tmp/chez.log
+        then
+            status=1
+        else
+            status=0
+        fi
+    fi
+}
+
 temp_dir=$(mktemp -d)
 
 for pkg in input/*.scm
