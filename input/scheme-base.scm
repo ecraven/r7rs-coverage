@@ -338,7 +338,7 @@
 ;; TEST inexact?
 (assert (inexact? 3.0))
 ;; TEST input-port-open?
-(let ((p (open-input-string "foo"))) (assert (input-port-open? p)))
+(let ((p (open-input-string "foo"))) (assert (input-port-open? p)) (close-input-port p) (assert (not (input-port-open? p))))
 ;; TEST input-port?
 (let ((p (open-input-string "foo"))) (assert (input-port? p)))
 ;; TEST integer->char
@@ -474,7 +474,7 @@
 ;; TEST or short-circuit
 (assert (or #f #t (/ 1 0)))
 ;; TEST output-port-open?
-(let ((p (open-output-string))) (assert (output-port-open? p)))
+(let ((p (open-output-string))) (assert (output-port-open? p)) (close-output-port p) (assert (not (output-port-open? p))))
 ;; TEST output-port?
 (let ((p (open-output-string))) (assert (output-port? p)))
 ;; TEST pair?
