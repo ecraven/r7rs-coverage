@@ -1,6 +1,6 @@
 .PHONY: all html clean
 
-all: mit gerbil chicken guile chibi larceny kawa gauche racket cyclone
+all: mit gerbil chicken guile chibi larceny kawa gauche racket cyclone foment
 
 mit: mit.log Makefile
 mit.log:
@@ -35,6 +35,9 @@ racket.log:
 cyclone: cyclone.log Makefile
 cyclone.log:
 	./coverage cyclone
+foment: foment.log Makefile
+foment.log:
+	./coverage foment
 chez: chez.log Makefile
 chez.log:
 	./coverage chez
