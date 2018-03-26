@@ -119,7 +119,7 @@
 ;; TEST case else
 (assert (= 1 (case 'a ((b) 3) ((a f) 1) (else 2))))
 ;; TEST case =>
-(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w y) 'semivowel) (else => (lambda (x) x)))))
+(assert (eq? 'c (case (car '(c d)) ((a e i o y) 'vowel) ((w j) 'semivowel) (else => (lambda (x) x)))))
 ;; TEST cdar
 (assert (= 2 (cdar (list '(1 . 2)))))
 ;; TEST cddr
@@ -146,11 +146,11 @@
 (assert (char? #\a))
 (assert (not (char? 3)))
 ;; TEST close-input-port
-(let ((p (open-input-string "foobar"))) (assert (input-port-open? p)) (close-input-port p) (assert (not (input-port-open? p))))
+(let ((p (open-input-string "foobar"))) (assert (eq? (read p) 'foobar)) (close-input-port p))
 ;; TEST close-output-port
-(let ((p (open-output-string))) (assert (output-port-open? p)) (close-output-port p) (assert (not (output-port-open? p))))
+(let ((p (open-output-string))) (write "foobar" p) (close-output-port p))
 ;; TEST close-port
-(let ((p (open-output-string))) (assert (output-port-open? p)) (close-port p) (assert (not (output-port-open? p))))
+(let ((p (open-output-string))) (write "foobar" p) (close-port p))
 ;; TEST complex?
 (assert (not (complex? 'a))) (assert (complex? 3))
 (assert (complex? 3+1i))
@@ -338,7 +338,7 @@
 ;; TEST inexact?
 (assert (inexact? 3.0))
 ;; TEST input-port-open?
-(let ((p (open-input-string "foo"))) (assert (input-port-open? p)))
+(let ((p (open-input-string "foo"))) (assert (input-port-open? p)) (close-input-port p) (assert (not (input-port-open? p))))
 ;; TEST input-port?
 (let ((p (open-input-string "foo"))) (assert (input-port? p)))
 ;; TEST integer->char
@@ -474,7 +474,7 @@
 ;; TEST or short-circuit
 (assert (or #f #t (/ 1 0)))
 ;; TEST output-port-open?
-(let ((p (open-output-string))) (assert (output-port-open? p)))
+(let ((p (open-output-string))) (assert (output-port-open? p)) (close-output-port p) (assert (not (output-port-open? p))))
 ;; TEST output-port?
 (let ((p (open-output-string))) (assert (output-port? p)))
 ;; TEST pair?

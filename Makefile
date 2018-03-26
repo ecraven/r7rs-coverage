@@ -38,6 +38,9 @@ cyclone.log:
 foment: foment.log Makefile
 foment.log:
 	./coverage foment
+chez: chez.log Makefile
+chez.log:
+	./coverage chez
 
 html: index.html
 
