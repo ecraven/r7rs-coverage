@@ -24,8 +24,12 @@
 (assert (char-upper-case? #\A))
 ;; TEST char-whitespace?
 (assert (char-whitespace? #\space))
-;; TEST digit-value
+;; TEST digit-value,ascii
+(assert (eq? #f (digit-value #\.)))
 (assert (= 3 (digit-value #\3)))
+;; TEST digit-value,unicode ٤ and ૦
+(assert (= 4 (digit-value #\x0664)))
+(assert (= 0 (digit-value #\x0ae6)))
 ;; TEST string-ci<=?
 (assert (string-ci<=? "a" "A" "b" "B"))
 ;; TEST string-ci<?

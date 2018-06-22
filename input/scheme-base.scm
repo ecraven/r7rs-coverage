@@ -158,12 +158,17 @@
 (assert (= 1 (cond ((= 0 1) 0) (else 1))))
 ;; TEST cond =>
 (assert (= 2 (cond ((assq 'b '((a 1) (b 2))) => cadr) (else #f))))
-;; TEST cond-expand
+;; TEST cond-expand else
 (cond-expand (else (assert #t)))
+;; TEST cond-expand r7rs
 (cond-expand (r7rs (assert #t)))
+;; TEST cond-expand library scheme base
 (cond-expand ((library (scheme base)) (assert #t)))
+;; TEST cond-expand or
 (cond-expand ((or (library (scheme base))) (assert #t)) (else (assert #f)))
+;; TEST cond-expand and
 (cond-expand ((and (library (scheme base))) (assert #t)) (else (assert #f)))
+;; TEST cond-expand not
 (cond-expand ((not (library (lets-hope-no-one-defines-a-library-like-this))) (assert #t)) (else (assert #f)))
 ;; TEST cons
 (assert (equal? '(1 . 2) (cons 1 2)))
@@ -452,7 +457,7 @@
 (assert (string=? "123" (number->string 123)))
 (assert (string=? "1111011" (number->string 123 2)))
 (assert (string=? "173" (number->string 123 8)))
-(assert (string=? "7b" (number->string 123 16)))
+(assert (string=? "89" (number->string 137 16))) ;; don't generate letters, A vs. a
 (assert (string=? "123" (number->string 123 10)))
 ;; TEST number?
 (assert (number? 3))
@@ -761,12 +766,46 @@
 (assert '#(1 2 3 4 5))
 ;; TEST literals cyclic list
 (assert (eq? 'a (car '#1=(a b . #1#))))
-;; TEST literals named chars
-(assert (list #\alarm #\backspace #\delete #\escape #\newline #\null #\return #\space #\tab))
+;; TEST literals named char alarm
+(assert (list #\alarm))
+;; TEST literals named char backspace
+(assert (list #\backspace))
+;; TEST literals named char delete
+(assert (list #\delete))
+;; TEST literals named char escape
+(assert (list #\escape))
+;; TEST literals named char newline
+(assert (list #\newline))
+;; TEST literals named char null
+(assert (list #\null))
+;; TEST literals named char return
+(assert (list #\return))
+;; TEST literals named char space
+(assert (list #\space))
+;; TEST literals named char tab
+(assert (list #\tab))
 ;; TEST literals basic chars
 (assert (list #\a #\0 #\-))
 ;; TEST literal string
-(assert "foobar\a\b\t\n\r\"\\\|\x12;")
+(assert "foobar")
+;; TEST literal string escape alarm
+(assert "\a")
+;; TEST literal string escape backspace
+(assert "\b")
+;; TEST literal string escape tab
+(assert "\t")
+;; TEST literal string escape linefeed
+(assert "\n")
+;; TEST literal string escape return
+(assert "\r")
+;; TEST literal string escape double quote
+(assert "\"")
+;; TEST literal string escape backslash
+(assert "\\")
+;; TEST literal string escape vertical line 
+(assert "\|")
+;; TEST literal string with char hex escape
+(assert "\x12;")
 ;; TEST literals boolean #t and #f
 (assert #t)
 (assert (not #f))
