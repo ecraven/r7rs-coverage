@@ -278,7 +278,7 @@
 ;; TEST eqv? different bytevectors
 (let ((a (make-bytevector 3)) (b (make-bytevector 3))) (assert (not (eqv? a b))))
 ;; TEST error
-(assert (error-object? (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo")))))))
+(assert (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo"))))))
 ;; TEST error-object-irritants
 (assert (equal? (list "bar" "baaz") (error-object-irritants (call/cc (lambda (k) (with-exception-handler (lambda (c) (k c)) (lambda () (error "foo" "bar" "baaz"))))))))
 ;; TEST error-object-message
