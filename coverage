@@ -57,6 +57,10 @@ case "$1" in
             SCHEME_NAME=foment
             SCHEME_VERSION=$(foment --version | cut -f 2 -d-)
             ;;
+    sagittarius) SCHEME_EXE=sagittarius_exec
+                 SCHEME_NAME=sagittarius
+                 SCHEME_VERSION=$(sagittarius -v | cut -f 5 -d\ )
+            ;;
 
     *) echo "Unknown Scheme"
        exit -1
@@ -134,11 +138,11 @@ chibi_exec() {
     fi
 }
 
-
 foment_exec() {
     timeout ${CPU_LIMIT} foment $1
     status=$?
 }
+
 chez_exec() {
     timeout ${CPU_LIMIT} chez-scheme --libdirs ~/scheme/chez < $1 > /tmp/chez.log 2>&1
     if grep 'ERROR' /tmp/chez.log
@@ -152,6 +156,11 @@ chez_exec() {
             status=0
         fi
     fi
+}
+
+sagittarius_exec() {
+    timeout ${CPU_LIMIT} sagittarius -r7 $1
+    status=$?
 }
 
 temp_dir=$(mktemp -d)
