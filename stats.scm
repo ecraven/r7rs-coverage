@@ -103,8 +103,8 @@
                                                         (format *console* "ERROR: no result for ~a ~a ~a~%" data group scheme)
                                                         ))))))
     (format #f "~a ~a"
-            (if (zero? pos) "" (format #f "<small class=\"ok\">~a</small><i class=\"fa fa-check\"></i>" pos))
-            (if (zero? neg) "" (format #f "<small class=\"error\">~a</small><i class=\"fa fa-times\"></i>" neg)))))
+            (if (zero? pos) "" (format #f "<small class=\"ok\">~a</small>✓" pos))
+            (if (zero? neg) "" (format #f "<small class=\"error\">~a</small>×" neg)))))
 (define (format-stats)
   (with-output-to-file "index.html"
     (lambda ()
@@ -115,16 +115,13 @@
       (set! *tests* (make-hash-table))
       (parse-data)
       (let ((scheme-list (sort *schemes* symbol<?)))
-        (format #t "<head><link rel=\"stylesheet\" href=\"https://opensource.keycdn.com/fontawesome/4.6.3/font-awesome.min.css\" integrity=\"sha384-Wrgq82RsEean5tP3NK3zWAemiNEXofJsTwTyHmNb/iL3dP/sZJ4+7sOld1uqYJtE\" crossorigin=\"anonymous\"></head><body>~%")
+        (format #t "<html><head><meta charset=\"utf-8\"/></head><body>~%")
         (format #t "<style>
 body { max-width: 1800px; }
 .group { font-size: 130%; border-top: 2px solid grey; border-bottom: 1px solid grey; }
 .testname { font-style: italic; font-size: 80%; font-weight: lighter; }
 .offset { margin-left: 1em; }
 .selected { background-color: #060; }
-i.fa-check { color: #0b0; min-width: 1em; }
-i.fa-times { color: #b00; min-width: 1em; }
-i.fa-adjust { color: #880; min-width: 1em; }
 .ok { color: #0b0; }
 .error { color: #b00; }
 .details { color: #888; font-size: 70%; }
@@ -194,17 +191,17 @@ document.addEventListener(\"DOMContentLoaded\", function() {
                                                              r))
                                                      (ok (apply + x))
                                                      (total (length x)))
-                                                (format #t "<td class=\"~a\"><i class=\"fa fa-~a\"/> <span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "check" (if (= 0 ok) "times" "adjust")) (format #f "~a/~a" ok total)))) ;;  
+                                                (format #t "<td class=\"~a\">~a<span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "✓" (if (= 0 ok) "×" "◑")) (format #f "~a/~a" ok total)))) ;;  
                                             (sort *schemes* symbol<?))
                                   (format #t "</tr>~%")
                                   (for-each (lambda (res)
                                               (format #t "<tr data-child-of=\"~a\" class=\"test\"><td><span class=\"testname offset\">~a</span></td>~%" id (if (string-null? (car res)) test (car res)))
                                               (for-each (lambda (scheme)
                                                           (let ((x (hash-table/get (cdr res) scheme 'unknown)))
-                                                            (format #t "<td class=\"~a\"><i class=\"offset fa fa-~a\"/></td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "check" "times"))))
+                                                            (format #t "<td class=\"~a\">~a</td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "✓" "×"))))
                                                         (sort *schemes* symbol<?))
                                               (format #t "</tr>"))
                                             (sort r (lambda (a b) (string<? (car a) (car b)))))))
                               (sort (hash-table/get *tests* group '()) string<?)))
                   (sort *groups* symbol<?))
-        (format #t "</tbody></table>")))))
+        (format #t "</tbody></table></body></html>")))))
