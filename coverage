@@ -1,12 +1,13 @@
 #!/bin/bash
 
 GUILE=${GUILE:-guile}
+GXI=${GXI:-gxi}
 CPU_LIMIT=${CPU_LIMIT:-"2"}
 
 case "$1" in
     gerbil) SCHEME_EXE=gerbil_exec
          SCHEME_NAME=gerbil
-         SCHEME_VERSION=$(gxi --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
+         SCHEME_VERSION=$(${GXI} --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
          ;;
     loko) SCHEME_NAME=loko
           SCHEME_EXE=loko_exec
@@ -93,7 +94,7 @@ picrin_exec() {
 }
 
 gerbil_exec() {
-    timeout ${CPU_LIMIT} gxi --lang r7rs $1
+    timeout ${CPU_LIMIT} ${GXI} --lang r7rs $1
     status=$?
 }
 
