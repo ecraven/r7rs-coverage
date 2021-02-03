@@ -8,7 +8,10 @@ case "$1" in
          SCHEME_NAME=gerbil
          SCHEME_VERSION=$(gxi --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
          ;;
-
+    loko) SCHEME_NAME=loko
+          SCHEME_EXE=loko_exec
+          SCHEME_VERSION=$(echo | loko | grep -e '^Loko Scheme ' | sed 's/Loko Scheme //')
+          ;;
     mit) SCHEME_EXE=mit_scheme_exec
          SCHEME_NAME=mit
          SCHEME_VERSION=$(mit-scheme --version | grep Release | cut -f 4 -d\  )
@@ -66,6 +69,11 @@ esac
 
 racket_exec() {
     timeout ${CPU_LIMIT} racket $1
+    status=$?
+}
+
+loko_exec() {
+    timeout ${CPU_LIMIT} loko -std=r7rs --program $1
     status=$?
 }
 
