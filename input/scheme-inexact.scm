@@ -19,7 +19,7 @@
 ;; TEST log two parameters
 (assert (and (> (log 10 4) 1.660) (< (log 10 4) 1.661)))
 ;; TEST nan?
-(assert (nan? +nan.0))
+(assert (not (nan? 17)))
 ;; TEST sin
 (assert (and (> (sin 3) 0.141) (< (sin 3) 0.142)))
 ;; TEST sqrt

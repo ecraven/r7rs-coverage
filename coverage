@@ -2,7 +2,7 @@
 
 GUILE=${GUILE:-guile}
 GXI=${GXI:-gxi}
-CPU_LIMIT=${CPU_LIMIT:-"2"}
+CPU_LIMIT=${CPU_LIMIT:-"5"}
 
 case "$1" in
     gerbil) SCHEME_EXE=gerbil_exec
@@ -27,11 +27,11 @@ case "$1" in
            ;;
     chez) SCHEME_EXE=chez_exec
            SCHEME_NAME=chez
-           SCHEME_VERSION=$(chez-scheme  --version)
+           SCHEME_VERSION=$(chez-scheme --version 2>&1)
            ;;
     chicken) SCHEME_EXE=csi_exec
              SCHEME_NAME=chicken
-             SCHEME_VERSION=$(csi -version | grep Version | cut -f 2 -d\   )
+             SCHEME_VERSION=$(csi -version | cut -f 1 -d - )
              ;;
     larceny) SCHEME_EXE=larceny_exec
              SCHEME_NAME=larceny
@@ -62,6 +62,10 @@ case "$1" in
             SCHEME_VERSION=$(foment --version | cut -f 2 -d-)
             ;;
 
+    sagittarius) SCHEME_EXE=sagittarius_exec
+                 SCHEME_NAME=sagittarius
+                 SCHEME_VERSION=$(sagittarius -v | cut -f 5 -d\ )
+                 ;;
     *) echo "Unknown Scheme"
        exit -1
        ;;
@@ -94,7 +98,8 @@ picrin_exec() {
 }
 
 gerbil_exec() {
-    timeout ${CPU_LIMIT} ${GXI} --lang r7rs $1
+    cat $1
+    timeout -k ${CPU_LIMIT} ${CPU_LIMIT} ${GXI} --lang r7rs $1
     status=$?
 }
 
@@ -129,7 +134,8 @@ mit_scheme_exec() {
 }
 
 guile_exec() {
-    timeout ${CPU_LIMIT} ${GUILE} $1
+    cat $1
+    timeout ${CPU_LIMIT} ${GUILE} --r7rs $1
     status=$?
 }
 
@@ -148,6 +154,12 @@ foment_exec() {
     timeout ${CPU_LIMIT} foment $1
     status=$?
 }
+
+sagittarius_exec() {
+    timeout ${CPU_LIMIT} sagittarius -r7 -d -n $1
+    status=$?
+}
+
 chez_exec() {
     timeout ${CPU_LIMIT} chez-scheme --libdirs ~/scheme/chez < $1 > /tmp/chez.log 2>&1
     if grep 'ERROR' /tmp/chez.log

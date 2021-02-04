@@ -5,3 +5,15 @@ See https://ecraven.github.io/r7rs-coverage/
 
 ** Chez
 You need the r7rs libraries in =~/scheme/chez=.
+** Guile
+The code assumes a Guile that supports =--r7rs= (3 at least).
+** Implementation
+Each file in =input= is one section of tests and is interpreted as the name of an import in addition to =(scheme base)=.
+Each file is split up at each line starting with =;; TEST=.
+The first word after =TEST= is the name of the test, the rest is the "subtest" name.
+That code is prefixed with an import statement and a simple definition of =assert=, and run through the Scheme implementation with a maximum time of 5 seconds.
+
+To add a support for a new Scheme:
+- add it to =Makefile=
+- add it to =coverage=
+- run with =make new-scheme=
