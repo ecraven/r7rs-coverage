@@ -98,7 +98,6 @@ picrin_exec() {
 }
 
 gerbil_exec() {
-    cat $1
     timeout -k ${CPU_LIMIT} ${CPU_LIMIT} ${GXI} --lang r7rs $1
     status=$?
 }
