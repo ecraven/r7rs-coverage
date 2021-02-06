@@ -3,8 +3,18 @@
 GUILE=${GUILE:-guile}
 GXI=${GXI:-gxi}
 CPU_LIMIT=${CPU_LIMIT:-"5"}
+HUSKI=${HUSKI:-huski}
+HUSKC=${HUSKC:-huskc}
 
 case "$1" in
+    husk) SCHEME_EXE=husk_exec
+          SCHEME_NAME=husk
+          SCHEME_VERSION=$($HUSKC --version | grep Version | cut -d\  -f 3)
+          ;;
+    owllisp) SCHEME_EXE=owllisp_exec
+             SCHEME_NAME=owllisp
+             SCHEME_VERSION=$(ol --version | cut -d\  -f 3)
+             ;;
     gerbil) SCHEME_EXE=gerbil_exec
          SCHEME_NAME=gerbil
          SCHEME_VERSION=$(${GXI} --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
@@ -61,7 +71,10 @@ case "$1" in
             SCHEME_NAME=foment
             SCHEME_VERSION=$(foment --version | cut -f 2 -d-)
             ;;
-
+    tinyscheme) SCHEME_EXE=tinyscheme_exec
+            SCHEME_NAME=tinyscheme
+            SCHEME_VERSION=1.42
+            ;;
     sagittarius) SCHEME_EXE=sagittarius_exec
                  SCHEME_NAME=sagittarius
                  SCHEME_VERSION=$(sagittarius -v | cut -f 5 -d\ )
@@ -99,6 +112,16 @@ picrin_exec() {
 
 gerbil_exec() {
     timeout -k ${CPU_LIMIT} ${CPU_LIMIT} ${GXI} --lang r7rs $1
+    status=$?
+}
+
+husk_exec() {
+    timeout ${CPU_LIMIT} ${HUSKI} $1
+    status=$?
+}
+
+owllisp_exec() {
+    timeout ${CPU_LIMIT} ol --no-readline -m program $1
     status=$?
 }
 
@@ -151,6 +174,12 @@ chibi_exec() {
 
 foment_exec() {
     timeout ${CPU_LIMIT} foment $1
+    status=$?
+}
+
+tinyscheme_exec() {
+    cat $1
+    timeout ${CPU_LIMIT} tinyscheme -1 $1
     status=$?
 }
 

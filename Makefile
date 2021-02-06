@@ -1,6 +1,6 @@
 .PHONY: all html clean
 
-all: chibi chicken cyclone foment gauche gerbil guile kawa loko mit racket sagittarius # chez larceny
+all: chibi chicken cyclone foment gauche gerbil guile husk kawa loko mit racket sagittarius # chez larceny picrin owllisp
 
 chez: chez.log Makefile
 chez.log:
@@ -26,6 +26,9 @@ gerbil.log:
 guile: guile.log Makefile
 guile.log:
 	./coverage guile
+husk: husk.log Makefile
+husk.log:
+	./coverage husk
 kawa: kawa.log Makefile
 kawa.log:
 	./coverage kawa
@@ -38,6 +41,9 @@ loko.log:
 mit: mit.log Makefile
 mit.log:
 	./coverage mit
+owllisp: owllisp.log Makefile
+owllisp.log:
+	./coverage owllisp
 picrin: picrin.log Makefile
 picrin.log:
 	./coverage picrin
@@ -47,6 +53,9 @@ racket.log:
 sagittarius: sagittarius.log Makefile
 sagittarius.log:
 	./coverage sagittarius
+tinyscheme: tinyscheme.log Makefile
+tinyscheme.log:
+	./coverage tinyscheme
 
 html: index.html
 
