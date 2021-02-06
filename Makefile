@@ -1,6 +1,7 @@
 .PHONY: all html clean
 
-all: chibi chicken cyclone foment gauche gerbil guile husk kawa loko mit owllisp racket sagittarius # chez larceny picrin
+# slowest first
+all: sagittarius kawa racket mit chibi chicken cyclone foment gauche gerbil guile husk loko owllisp  # chez larceny picrin
 
 chez: chez.log Makefile
 chez.log:

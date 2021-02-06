@@ -25,25 +25,25 @@
 ;; TEST list=
 (assert (list list=))
 ;; TEST first
-(assert (list first))
+(assert (= (first '(1 2 3 4 5 6 7 8 9 10)) 1))
 ;; TEST second
-(assert (list second))
+(assert (= (second '(1 2 3 4 5 6 7 8 9 10)) 2))
 ;; TEST third
-(assert (list third))
+(assert (= (third '(1 2 3 4 5 6 7 8 9 10)) 3))
 ;; TEST fourth
-(assert (list fourth))
+(assert (= (fourth '(1 2 3 4 5 6 7 8 9 10)) 4))
 ;; TEST fifth
-(assert (list fifth))
+(assert (= (fifth '(1 2 3 4 5 6 7 8 9 10)) 5))
 ;; TEST sixth
-(assert (list sixth))
+(assert (= (sixth '(1 2 3 4 5 6 7 8 9 10)) 6))
 ;; TEST seventh
-(assert (list seventh))
+(assert (= (seventh '(1 2 3 4 5 6 7 8 9 10)) 7))
 ;; TEST eighth
-(assert (list eighth))
+(assert (= (eighth '(1 2 3 4 5 6 7 8 9 10)) 8))
 ;; TEST ninth
-(assert (list ninth))
+(assert (= (ninth '(1 2 3 4 5 6 7 8 9 10)) 9))
 ;; TEST tenth
-(assert (list tenth))
+(assert (= (tenth '(1 2 3 4 5 6 7 8 9 10)) 10))
 ;; TEST car+cdr
 (assert (list car+cdr))
 ;; TEST take
