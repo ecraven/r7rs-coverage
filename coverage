@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -uo pipefail
 GUILE=${GUILE:-guile}
 GXI=${GXI:-gxi}
 CPU_LIMIT=${CPU_LIMIT:-"5"}
@@ -121,7 +121,8 @@ husk_exec() {
 }
 
 owllisp_exec() {
-    timeout ${CPU_LIMIT} ol --no-readline -m program $1
+    # TODO: something make owllisp hang when run from timeout, cannot quite reproduce it from the shell, run without timeout for now...
+    ol --no-readline $1
     status=$?
 }
 
@@ -156,7 +157,6 @@ mit_scheme_exec() {
 }
 
 guile_exec() {
-    cat $1
     timeout ${CPU_LIMIT} ${GUILE} --r7rs $1
     status=$?
 }
@@ -178,7 +178,6 @@ foment_exec() {
 }
 
 tinyscheme_exec() {
-    cat $1
     timeout ${CPU_LIMIT} tinyscheme -1 $1
     status=$?
 }
@@ -226,7 +225,8 @@ do
                 tmpfile=$(mktemp)
                 test=$(grep ';; TEST' $file | cut -f 3 -d\  )
                 params=$(grep ';; TEST' $file | cut -f 4- -d\  )
-                echo $pkg $test $params
+                echo "--------------------------------------------------"
+                echo "$pkg" "$test" "$params"
                 if [ -r preludes/$SCHEME_NAME.scm ]
                 then
                     cat preludes/$SCHEME_NAME.scm >> $tmpfile
@@ -240,6 +240,7 @@ do
                 cat $file >> $tmpfile
                 $SCHEME_EXE $tmpfile
                 rm $tmpfile
+                echo " -> $status"
             } >> $SCHEME_NAME.log 2>&1
             if [ $status == 0 ]; then
                 state=OK

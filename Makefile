@@ -1,6 +1,6 @@
 .PHONY: all html clean
 
-all: chibi chicken cyclone foment gauche gerbil guile husk kawa loko mit racket sagittarius # chez larceny picrin owllisp
+all: chibi chicken cyclone foment gauche gerbil guile husk kawa loko mit owllisp racket sagittarius # chez larceny picrin
 
 chez: chez.log Makefile
 chez.log:

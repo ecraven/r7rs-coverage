@@ -3,22 +3,26 @@
 ;; TEST * one parameter
 (assert (= 5 (* 5)))
 ;; TEST * more than two parameters
+(assert (= 6 (* 1 2 3)))
 (assert (= 24 (* 1 2 3 4)))
 ;; TEST + no parameters
 (assert (= 0 (+)))
 ;; TEST + one parameter
 (assert (= 5 (+ 5)))
 ;; TEST + more than two parameters
+(assert (= 6 (+ 1 2 3)))
 (assert (= 10 (+ 1 2 3 4)))
 ;; TEST - one parameter
 (assert (= -5 (- 5)))
 ;; TEST - more than two parameters
 (assert (= -3 (- 1 2 2)))
+(assert (= -5 (- 1 2 2 2)))
 ;; ... is missing here
 ;; TEST / one parameter
 (assert (= 1/5 (/ 5)))
 ;; TEST / more than two parameters
 (assert (= 1/6 (/ 1 2 3)))
+(assert (= 1/24 (/ 1 2 3 4)))
 ;; TEST < two parameters
 (assert (< 1 2))
 ;; TEST < more than two parameters
@@ -54,8 +58,9 @@
 (assert (equal? '(a b c . d) (append '(a b) '(c . d))))
 ;; TEST append not list
 (assert (eq? 'a (append '() 'a)))
-;; TEST apply
+;; TEST apply simple list
 (assert (= 3 (apply + '(1 2))))
+;; TEST apply single arguments + list
 (assert (= 10 (apply + 1 2 3 '(4))))
 ;; TEST assoc
 (assert (equal? '(a 1) (assoc 'a '((a 1) (b 2) (c 3)))))
@@ -136,14 +141,17 @@
 (assert (char<=? #\a #\a #\b #\b))
 ;; TEST char<?
 (assert (char<? #\a #\b #\c))
-;; TEST char=?
+;; TEST char=? two parameters
+(assert (char=? #\a #\a))
+;; TEST char=? three parameters
 (assert (char=? #\a #\a #\a))
 ;; TEST char>=?
 (assert (char>=? #\b #\b #\a #\a))
 ;; TEST char>?
 (assert (char>? #\c #\b #\a))
-;; TEST char?
+;; TEST char? character #\a
 (assert (char? #\a))
+;; TEST char? integer 3 not char
 (assert (not (char? 3)))
 ;; TEST close-input-port
 (let ((p (open-input-string "foobar"))) (close-input-port p)) ;; (assert (eq? (read p) 'foobar))
@@ -151,8 +159,11 @@
 (let ((p (open-output-string))) (close-output-port p)) ;; (write "foobar" p)
 ;; TEST close-port
 (let ((p (open-output-string))) (close-port p)) ;; (write "foobar" p)
-;; TEST complex?
-(assert (not (complex? 'a))) (assert (complex? 3))
+;; TEST complex? not symbol 'a
+(assert (not (complex? 'a)))
+;; TEST complex? integer 3
+(assert (complex? 3))
+;; TEST complex? complex literal 3+1i
 (assert (complex? 3+1i))
 ;; TEST cond else
 (assert (= 1 (cond ((= 0 1) 0) (else 1))))
@@ -751,9 +762,10 @@
 (assert (equal? "o" (let ((p (open-output-string))) (write-string "foo" p 1 2) (get-output-string p))))
 ;; TEST write-u8
 (let ((p (open-output-bytevector))) (write-u8 123 p) (assert (= 123 (bytevector-u8-ref (get-output-bytevector p) 0))))
-;; TEST zero?
+;; TEST zero? integer
 (assert (zero? 0))
-
+;; TEST zero? float
+(assert (zero? 0.0))
 ;; TEST literals pair
 (assert (equal? (cons 1 2) '(1 . 2)))
 ;; TEST literals list
