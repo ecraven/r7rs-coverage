@@ -15,6 +15,10 @@ case "$1" in
              SCHEME_NAME=owllisp
              SCHEME_VERSION=$(ol --version | cut -d\  -f 3)
              ;;
+    oaklisp) SCHEME_EXE=oaklisp_exec
+             SCHEME_NAME=oaklisp
+             SCHEME_VERSION=$(oaklisp --version | cut -d\  -f 2)
+             ;;
     gerbil) SCHEME_EXE=gerbil_exec
          SCHEME_NAME=gerbil
          SCHEME_VERSION=$(${GXI} --lang r7rs -e '(import (gerbil/core)) (display (gerbil-system-version-string))' | cut -d\  -f 2)
@@ -53,7 +57,7 @@ case "$1" in
           ;;
     picrin) SCHEME_EXE=picrin_exec
             SCHEME_NAME=picrin
-            SCHEME_VERSION="unknown"
+            SCHEME_VERSION="0.1"
             ;;
     gauche) SCHEME_EXE=gauche_exec
             SCHEME_NAME=gauche
@@ -79,6 +83,10 @@ case "$1" in
                  SCHEME_NAME=sagittarius
                  SCHEME_VERSION=$(sagittarius -v | cut -f 5 -d\ )
                  ;;
+    stklos) SCHEME_EXE=stklos_exec
+            SCHEME_NAME=stklos
+            SCHEME_VERSION=$(stklos --version | grep stklos | cut -f 2 -d\ )
+            ;;
     *) echo "Unknown Scheme"
        exit -1
        ;;
@@ -124,6 +132,17 @@ owllisp_exec() {
     # TODO: something make owllisp hang when run from timeout, cannot quite reproduce it from the shell, run without timeout for now...
     ol --no-readline $1
     status=$?
+}
+oaklisp_exec() {
+    mv $1 $1.oak
+    oaklisp -- --load $1.oak --exit > /tmp/oaklisp.log 2>&1
+    cat /tmp/oaklisp.log
+    if grep 'An error occurred while processing' /tmp/oaklisp.log
+    then
+        status=1
+    else
+        status=0
+    fi
 }
 
 larceny_exec() {
@@ -184,6 +203,11 @@ tinyscheme_exec() {
 
 sagittarius_exec() {
     timeout ${CPU_LIMIT} sagittarius -r7 -d -n $1
+    status=$?
+}
+
+stklos_exec() {
+    timeout ${CPU_LIMIT} stklos -f $1
     status=$?
 }
 

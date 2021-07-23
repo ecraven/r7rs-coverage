@@ -19,10 +19,10 @@
 (assert (= -5 (- 1 2 2 2)))
 ;; ... is missing here
 ;; TEST / one parameter
-(assert (= 1/5 (/ 5)))
+(assert (= (/ 1 5) (/ 5)))
 ;; TEST / more than two parameters
-(assert (= 1/6 (/ 1 2 3)))
-(assert (= 1/24 (/ 1 2 3 4)))
+(assert (= (/ 1 6) (/ 1 2 3)))
+(assert (= (/ 1 24) (/ 1 2 3 4)))
 ;; TEST < two parameters
 (assert (< 1 2))
 ;; TEST < more than two parameters
@@ -836,3 +836,5 @@
 (assert -nan.0)
 ;; TEST literals float -inf.0
 (assert -inf.0)
+;; TEST literals rational
+(assert 7/15)

@@ -42,6 +42,9 @@ loko.log:
 mit: mit.log Makefile
 mit.log:
 	./coverage mit
+oaklisp: oaklisp.log Makefile
+oaklisp.log:
+	./coverage owllisp
 owllisp: owllisp.log Makefile
 owllisp.log:
 	./coverage owllisp
