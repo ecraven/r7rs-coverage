@@ -41,7 +41,7 @@ case "$1" in
            ;;
     chez) SCHEME_EXE=chez_exec
            SCHEME_NAME=chez
-           SCHEME_VERSION=$(chez-scheme --version 2>&1)
+           SCHEME_VERSION=$(chez --version 2>&1)
            ;;
     chicken) SCHEME_EXE=csi_exec
              SCHEME_NAME=chicken
@@ -212,7 +212,7 @@ stklos_exec() {
 }
 
 chez_exec() {
-    timeout ${CPU_LIMIT} chez-scheme --libdirs ~/scheme/chez < $1 > /tmp/chez.log 2>&1
+    timeout ${CPU_LIMIT} chez --libdirs ~/scheme/chez < $1 > /tmp/chez.log 2>&1
     if grep 'ERROR' /tmp/chez.log
     then
         status=1

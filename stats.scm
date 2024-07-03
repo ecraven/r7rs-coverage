@@ -1,36 +1,10 @@
-(load-option 'string-replace-string)
-(define (nested-hash-table/put! table value . keys)
-  (let loop ((table table)
-             (key (car keys))
-             (keys (cdr keys)))
-    (if (null? keys)
-        (hash-table/put! table key value)
-        (let ((sub-table (hash-table/get table key #f)))
-          (if sub-table
-              (loop sub-table (car keys) (cdr keys))
-              (let ((sub-table (make-hash-table)))
-                (hash-table/put! table key sub-table)
-                (loop sub-table (car keys) (cdr keys))))))))
-
-(define (nested-hash-table/get table default . keys)
-  (let loop ((table table)
-             (key (car keys))
-             (keys (cdr keys)))
-    (if (null? keys)
-        (hash-table/get table key default)
-        (let ((sub-table (hash-table/get table key #f)))
-          (if sub-table
-              (loop sub-table (car keys) (cdr keys))
-              default)))))
-
-(define (read-file-content filename)
-  "Read the entire file into a string."
-  (let* ((size (file-length filename))
-         (str (make-string size)))
-    (if (= size (read-string! str (open-input-file filename)))
-        str
-        (error "cannot read entire file" filename))))
-
+;; chez scheme
+(import (scheme base)
+        (only (mit-compat) nested-hash-table/put! nested-hash-table/get burst-string)
+        (only (srfi :1) first second third fourth fifth)
+        (srfi :69))
+(define (symbol<? a b)
+  (string<? (symbol->string a) (symbol->string b)))
 (define (read-data)
   (with-input-from-file "errors.csv"
     (lambda ()
@@ -69,8 +43,8 @@
                     (push scheme *schemes*))
                   (unless (memq group *groups*)
                     (push group *groups*))
-                  (unless (member name (hash-table/get *tests* group '()))
-                    (hash-table/put! *tests* group (cons name (hash-table/get *tests* group '()))))))
+                  (unless (member name (hash-table-ref/default *tests* group '()))
+                    (hash-table-set! *tests* group (cons name (hash-table-ref/default *tests* group '()))))))
               data)))
 
 (define (get-res group test)
@@ -79,9 +53,9 @@
 (define *current-id* 0)
 
 (define (next-id)
-  (begin0
-   (format #f "id~a" *current-id*)
-   (set! *current-id* (+ 1 *current-id*))))
+  (let ((res (format #f "id~a" *current-id*)))
+   (set! *current-id* (+ 1 *current-id*))
+   res))
 
 (define *console* (current-output-port))
 
@@ -90,11 +64,11 @@
   (let ((gr (nested-hash-table/get data #f group))
         (pos 0)
         (neg 0))
-    (hash-table/for-each gr
+    (hash-table-walk gr
                          (lambda (k function)
-                           (hash-table/for-each function
+                           (hash-table-walk function
                                                 (lambda (k test)
-                                                  (let ((r (hash-table/get test scheme #f)))
+                                                  (let ((r (hash-table-ref/default test scheme #f)))
                                                     (if r
                                                         (case r
                                                           ((ok) (set! pos (+ pos 1)))
@@ -114,7 +88,7 @@
       (set! *group-results* (make-hash-table))
       (set! *tests* (make-hash-table))
       (parse-data)
-      (let ((scheme-list (sort *schemes* symbol<?)))
+      (let ((scheme-list (sort symbol<? *schemes*)))
         (format #t "<html><head><meta charset=\"utf-8\"/></head><body>~%")
         (format #t "<style>
 body { max-width: 1800px; }
@@ -187,21 +161,22 @@ document.addEventListener(\"DOMContentLoaded\", function() {
                                   (format #t "<tr id=\"~a\" class=\"test-summary\"><td>~a</td>~%" id test)
                                   (for-each (lambda (scheme)
                                               (let* ((x (map (lambda (res)
-                                                               (if (eq? 'error (hash-table/get (cdr res) scheme 'error)) 0 1))
+                                                               (if (eq? 'error (hash-table-ref/default (cdr res) scheme 'error)) 0 1))
                                                              r))
                                                      (ok (apply + x))
                                                      (total (length x)))
-                                                (format #t "<td class=\"~a\">~a<span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "✓" (if (= 0 ok) "×" "◑")) (format #f "~a/~a" ok total)))) ;;  
-                                            (sort *schemes* symbol<?))
+                                                (format #t "<td class=\"~a\">~a<span class=\"details\">~a</span></td>~%" (if (= ok total) 'ok (if (= ok 0) 'error 'partial)) (if (= ok total) "✓" (if (= 0 ok) "×" "◑")) (format #f "~a/~a" ok total)))) ;;
+                                            (sort symbol<? *schemes*))
                                   (format #t "</tr>~%")
                                   (for-each (lambda (res)
-                                              (format #t "<tr data-child-of=\"~a\" class=\"test\"><td><span class=\"testname offset\">~a</span></td>~%" id (if (string-null? (car res)) test (car res)))
+                                              (format #t "<tr data-child-of=\"~a\" class=\"test\"><td><span class=\"testname offset\">~a</span></td>~%" id (if (string=? "" (car res)) test (car res)))
                                               (for-each (lambda (scheme)
-                                                          (let ((x (hash-table/get (cdr res) scheme 'unknown)))
+                                                          (let ((x (hash-table-ref/default (cdr res) scheme 'unknown)))
                                                             (format #t "<td class=\"~a\">~a</td>" (if (eq? 'ok x) "ok" "error") (if (eq? x 'ok) "✓" "×"))))
-                                                        (sort *schemes* symbol<?))
+                                                        (sort symbol<? *schemes*))
                                               (format #t "</tr>"))
-                                            (sort r (lambda (a b) (string<? (car a) (car b)))))))
-                              (sort (hash-table/get *tests* group '()) string<?)))
-                  (sort *groups* symbol<?))
-        (format #t "</tbody></table></body></html>")))))
+                                            (sort (lambda (a b) (string<? (car a) (car b))) r))))
+                              (sort string<? (hash-table-ref/default *tests* group '()))))
+                  (sort symbol<? *groups*))
+        (format #t "</tbody></table></body></html>")))
+    'replace))
