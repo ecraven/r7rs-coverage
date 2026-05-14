@@ -10,6 +10,7 @@ on:
 jobs:
   Tests:
     strategy:
+      fail-fast: false
       matrix:
         scheme:
           - capyscheme
